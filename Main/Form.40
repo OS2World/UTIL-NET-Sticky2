@@ -1,0 +1,36 @@
+/* Code Section Top of application procedure - Form STICKY2\Main */
+
+{
+char *c_ptr;
+char *l_buf;
+char locbuf[128];
+
+   l_buf = strdup(argv[0]);
+   c_ptr = strrchr(l_buf, '\\');
+   gDataPath = l_buf;
+
+  if (c_ptr)
+    {
+    c_ptr++;
+    *c_ptr = 0;
+    sprintf(gINIFile, "%sSticky2.INI", gDataPath);
+    } /* end if */
+
+
+  if (argc > 1 && isdigit(argv[1][0]))
+  {
+    strcpy(locbuf, argv[1]);
+    strcpy(gSocketString, argv[1]);
+  } else {
+    GetString(S_Socket, "6711", locbuf, sizeof(locbuf));
+  } /* end if */
+
+  
+  if (strcmp(locbuf, "6711") != 0)
+    {
+    strcat(gAppName, "_");
+    strcat(gAppName, locbuf);
+    } /* end if */
+
+
+}

@@ -1,0 +1,54 @@
+/* Event Click/Selected - Container OPTIONS_FOLDER */
+CHAR aTextValue[255]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+/* pointer to a notify record emphasis structure */
+PNOTIFYRECORDEMPHASIS pNotifyRecordEmphasis = PVOIDFROMMP(mp2);
+
+/* Get first selected item OPTIONS_FOLDER Container */
+{
+   PMINIRECORDCORE pRecord;
+   ULONG ulPageId;
+   CHAR locbuf[128];
+   
+   pRecord=(PMINIRECORDCORE)WinSendDlgItemMsg(hwndDlg, OPTIONS_FOLDER,
+                     CM_QUERYRECORDEMPHASIS,
+                     MPFROMP(CMA_FIRST), /* pointer to reference record */
+                     MPFROMLONG(CRA_SELECTED));
+                    
+
+ if (pRecord)
+   {
+   switch (pRecord->pszIcon[0])
+     {
+     case 'U':
+       ulPageId = gPageId[0];
+       break;
+     case 'D':
+       ulPageId = gPageId[1];
+       break;   
+     case 'S':
+       ulPageId = gPageId[2];
+       break;
+     case 'N':
+       ulPageId = gPageId[3];
+       break;
+     case 'A':
+       ulPageId = gPageId[4];
+       break;
+     case 'T':
+       ulPageId = gPageId[5];
+       break;
+     default :
+       ulPageId = gPageId[0];
+     } /* end switch */
+
+     WinSendDlgItemMsg(hwndDlg, OPTIONS_NOTEBOOK,
+                  BKM_TURNTOPAGE,
+                  MPFROMLONG(ulPageId),    /* Page ID */
+                  MPFROMLONG(0));
+     
+   }
+   
+}
+

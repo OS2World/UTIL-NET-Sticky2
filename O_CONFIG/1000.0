@@ -1,0 +1,3 @@
+/* Event Clicked/Selected - Close window after Send SEND_CONFIG */
+
+c_cas = 1;

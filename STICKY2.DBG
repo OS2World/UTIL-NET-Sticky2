@@ -1,0 +1,48 @@
+17:47:09.44 RECVINIT: Port[6711]
+17:47:09.45 RECVINIT: rtid[0] RC=0
+17:47:09.45 SOCKINIT: Port[0]
+17:47:09.45 SOCKINIT: stid[3] RC=0
+17:47:09.45 SOCKINIT: Port[1]
+17:47:09.45 SOCKINIT: stid[4] RC=0
+17:47:09.45 SOCKINIT: Port[2]
+17:47:09.45 SOCKINIT: stid[5] RC=0
+17:47:09.45 Starting Recv Thread! Socket [6711] ix = 65
+17:47:09.45 Starting Sending Thread! ix=0
+17:47:09.45 Starting Sending Thread! ix=1
+17:47:09.45 Starting Sending Thread! ix=2
+17:47:09.48 Restoring Window Position
+17:47:09.48 Restore Window Pos not found - Defaults
+17:47:09.48 After Restore -> tswp.fl = 1017
+17:47:09.48 Sticky/2 ICON Mode
+17:47:09.54 UserStatus: 16 [6711]
+17:47:09.54 UserStatus: 15 [0]
+17:47:09.54 SendTHREAD:Created Queue for READ [0] QUEUE RC=0
+17:47:09.55 UserStatus: 15 [1]
+17:47:09.55 SendTHREAD:Created Queue for READ [1] QUEUE RC=0
+17:47:09.55 UserStatus: 15 [2]
+17:47:09.55 SendTHREAD:Created Queue for READ [2] QUEUE RC=0
+17:47:09.57 UserStatus: 3 [0]
+17:47:09.57 UserStatus: 18 [0]
+17:47:09.58 UserStatus: 3 [1]
+17:47:09.58 UserStatus: 18 [1]
+17:47:09.59 UserStatus: 3 [2]
+17:47:09.59 UserStatus: 18 [2]
+17:47:11.57 Receive Socket handle = 0
+17:47:11.60 Binding handle <0> Socket 6711 [371a] to addr [ce7706d2]
+17:47:11.60 UserStatus: 17 [6711]
+17:47:12.70 Setting Notebook Pages
+17:47:46.63 ulPageId = -62597948
+17:47:46.63 Closing O_USER
+17:47:46.77 ulPageId = -62598196
+17:47:46.77 Closing O_DEBUG
+17:47:46.78 ulPageId = -62598700
+17:47:46.78 Closing O_CONFIG
+17:47:46.79 ulPageId = -62604100
+17:47:46.79 Closing O_NAMES
+17:47:46.81 ulPageId = -62604284
+17:47:46.81 Closing O_AUTO
+17:47:46.84 ulPageId = -62604532
+17:47:46.84 Closing O_THREADS
+17:47:46.85 ulPageId = 0
+17:47:46.86 Deleting (6) records from options container
+17:47:48.09 Saving Window Location/Position

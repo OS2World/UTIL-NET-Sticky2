@@ -1,0 +1,216 @@
+/* Event Opened - Form STICKY2\CONFIG */
+CHAR aTextValue[255]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+int	i=0;
+
+
+gConfigTerm = 0;
+/* Add a container record to end OPTIONS_FOLDER Container */
+{
+   PCONFIG_OPTIONS_FOLDER_REC pRecord, pRecords; /* Pointer to cnr item. */
+   
+   /* IMPORTANT!!!! Manually replace MAIN with the form name */
+   /* This pRecord typedef is contained in the .H for this form */
+   RECORDINSERT RecordInsert;
+
+   /* IMPORTANT!!! we allocate 32 extra bytes for the pszIcon string */
+   /* We must allocate more than that if we have any extra PSZ members */
+   /* as columns */
+   pRecords=(PVOID)WinSendDlgItemMsg(hwndDlg, OPTIONS_FOLDER,
+                  CM_ALLOCRECORD,
+                  MPFROMLONG(sizeof(*pRecord)-sizeof(MINIRECORDCORE)+32), /* Bytes of additional data for Text*/
+                  MPFROMLONG(gOptions));                  /* Number of records        */
+                  
+   pRecord = pRecords;               
+   pRecord->Record.cb=sizeof(MINIRECORDCORE);
+   pRecord->Record.flRecordAttr=0;
+//   pRecord->Record.hptrIcon=WinQuerySysPointer(HWND_DESKTOP,SPTR_FILE,FALSE);
+   pRecord->Record.hptrIcon=WinLoadPointer(HWND_DESKTOP, 0L, ICON_SUNSMILE);
+   pRecord->Record.pszIcon=(PBYTE)pRecord+sizeof(*pRecord);
+   strcpy(pRecord->Record.pszIcon,"User");
+
+
+   pRecord = (PCONFIG_OPTIONS_FOLDER_REC)pRecord->Record.preccNextRecord;
+   pRecord->Record.cb=sizeof(MINIRECORDCORE);
+   pRecord->Record.flRecordAttr=0;
+   pRecord->Record.hptrIcon=WinLoadPointer(HWND_DESKTOP, 0L, ICON_DEBUG);
+   pRecord->Record.pszIcon=(PBYTE)pRecord+sizeof(*pRecord);
+   strcpy(pRecord->Record.pszIcon,"Debug");
+   
+   pRecord = (PCONFIG_OPTIONS_FOLDER_REC)pRecord->Record.preccNextRecord;
+   pRecord->Record.cb=sizeof(MINIRECORDCORE);
+   pRecord->Record.flRecordAttr=0;
+   pRecord->Record.hptrIcon=WinLoadPointer(HWND_DESKTOP, 0L, ICON_TOOLS);
+   pRecord->Record.pszIcon=(PBYTE)pRecord+sizeof(*pRecord);
+   strcpy(pRecord->Record.pszIcon,"Setup");
+   
+   pRecord = (PCONFIG_OPTIONS_FOLDER_REC)pRecord->Record.preccNextRecord;
+   pRecord->Record.cb=sizeof(MINIRECORDCORE);
+   pRecord->Record.flRecordAttr=0;
+   pRecord->Record.hptrIcon=WinLoadPointer(HWND_DESKTOP, 0L, ICON_ML1);
+   pRecord->Record.pszIcon=(PBYTE)pRecord+sizeof(*pRecord);
+   strcpy(pRecord->Record.pszIcon,"Names");
+   
+   pRecord = (PCONFIG_OPTIONS_FOLDER_REC)pRecord->Record.preccNextRecord;
+   pRecord->Record.cb=sizeof(MINIRECORDCORE);
+   pRecord->Record.flRecordAttr=0;
+   pRecord->Record.hptrIcon=WinLoadPointer(HWND_DESKTOP, 0L, ICON_AUTOREPLY);
+   pRecord->Record.pszIcon=(PBYTE)pRecord+sizeof(*pRecord);
+   strcpy(pRecord->Record.pszIcon,"Auto\nReply");
+     
+   pRecord = (PCONFIG_OPTIONS_FOLDER_REC)pRecord->Record.preccNextRecord;
+   pRecord->Record.cb=sizeof(MINIRECORDCORE);
+   pRecord->Record.flRecordAttr=0;
+   pRecord->Record.hptrIcon=WinLoadPointer(HWND_DESKTOP, 0L, ICON_WS1);
+   pRecord->Record.pszIcon=(PBYTE)pRecord+sizeof(*pRecord);
+   strcpy(pRecord->Record.pszIcon,"Threads");
+   
+   
+
+
+/* IMPORTANT!!! initiaize other members here if they exist */
+
+   /* add the item to the container */
+   RecordInsert.cb=sizeof(RECORDINSERT);
+   RecordInsert.pRecordOrder=(PRECORDCORE)CMA_END;/* add to the end */
+   RecordInsert.pRecordParent=(PRECORDCORE)0;     /* not a child record */
+   RecordInsert.zOrder=CMA_TOP;
+   RecordInsert.cRecordsInsert=gOptions;
+   RecordInsert.fInvalidateRecord=TRUE;           /* repaint the record */
+   WinSendDlgItemMsg(hwndDlg, OPTIONS_FOLDER,
+                     CM_INSERTRECORD,
+                     MPFROMP(pRecords),
+                     MPFROMP(&RecordInsert));{
+ }
+
+}
+
+/* Add page with no tab OPTIONS_NOTEBOOK Notebook */
+{ 
+/* Important: assign hNewFrame with a newly created notebook form */
+HWND hNewFrame = OpenO_USER(hwndDlg, 0);      /* Window to go within page */
+ULONG ulPageId;        /* Page identifier */
+ulPageId=(ULONG)WinSendDlgItemMsg(hwndDlg, OPTIONS_NOTEBOOK,
+                  BKM_INSERTPAGE ,
+                  MPFROMLONG(0),
+                  MPFROM2SHORT(BKA_STATUSTEXTON|BKA_AUTOPAGESIZE,
+                     BKA_LAST));
+i = 0;
+MsgLog("Setting Notebook Pages");                     
+if (ulPageId) {
+   /* Associate window within page */   WinSetOwner(hNewFrame, WinWindowFromID(hwndDlg, OPTIONS_NOTEBOOK));
+   WinSetParent(hNewFrame, WinWindowFromID(hwndDlg, OPTIONS_NOTEBOOK),FALSE);
+   WinSendDlgItemMsg(hwndDlg, OPTIONS_NOTEBOOK,
+                  BKM_SETPAGEWINDOWHWND,
+                  MPFROMLONG(ulPageId),    /* Page ID */
+                  MPFROMHWND(hNewFrame));  /* Window within page */
+   gPageId[i++] = ulPageId;
+}
+}
+
+/* Add page with no tab OPTIONS_NOTEBOOK Notebook */
+{
+/* Important: assign hNewFrame with a newly created notebook form */
+HWND hNewFrame = OpenO_DEBUG(hwndDlg, 0);      /* Window to go within page */
+ULONG ulPageId;        /* Page identifier */
+ulPageId=(ULONG)WinSendDlgItemMsg(hwndDlg, OPTIONS_NOTEBOOK,
+                  BKM_INSERTPAGE ,
+                  MPFROMLONG(0),
+                  MPFROM2SHORT(BKA_STATUSTEXTON|BKA_AUTOPAGESIZE,
+                     BKA_LAST));
+if (ulPageId) {
+   /* Associate window within page */   WinSetOwner(hNewFrame, WinWindowFromID(hwndDlg, OPTIONS_NOTEBOOK));
+   WinSetParent(hNewFrame, WinWindowFromID(hwndDlg, OPTIONS_NOTEBOOK),FALSE);
+   WinSendDlgItemMsg(hwndDlg, OPTIONS_NOTEBOOK,
+                  BKM_SETPAGEWINDOWHWND,
+                  MPFROMLONG(ulPageId),    /* Page ID */
+                  MPFROMHWND(hNewFrame));  /* Window within page */
+   gPageId[i++] = ulPageId;                  
+}
+}
+
+/* Add page with no tab OPTIONS_NOTEBOOK Notebook */
+{
+/* Important: assign hNewFrame with a newly created notebook form */
+HWND hNewFrame = OpenO_CONFIG(hwndDlg, 0);      /* Window to go within page */
+ULONG ulPageId;        /* Page identifier */
+ulPageId=(ULONG)WinSendDlgItemMsg(hwndDlg, OPTIONS_NOTEBOOK,
+                  BKM_INSERTPAGE ,
+                  MPFROMLONG(0),
+                  MPFROM2SHORT(BKA_STATUSTEXTON|BKA_AUTOPAGESIZE,
+                     BKA_LAST));
+if (ulPageId) {
+   /* Associate window within page */   WinSetOwner(hNewFrame, WinWindowFromID(hwndDlg, OPTIONS_NOTEBOOK));
+   WinSetParent(hNewFrame, WinWindowFromID(hwndDlg, OPTIONS_NOTEBOOK),FALSE);
+   WinSendDlgItemMsg(hwndDlg, OPTIONS_NOTEBOOK,
+                  BKM_SETPAGEWINDOWHWND,
+                  MPFROMLONG(ulPageId),    /* Page ID */
+                  MPFROMHWND(hNewFrame));  /* Window within page */
+   gPageId[i++] = ulPageId;                  
+}
+}
+
+/* Add page with no tab OPTIONS_NOTEBOOK Notebook */
+{
+/* Important: assign hNewFrame with a newly created notebook form */
+HWND hNewFrame = OpenO_NAMES(hwndDlg, 0);      /* Window to go within page */
+ULONG ulPageId;        /* Page identifier */
+ulPageId=(ULONG)WinSendDlgItemMsg(hwndDlg, OPTIONS_NOTEBOOK,
+                  BKM_INSERTPAGE ,
+                  MPFROMLONG(0),
+                  MPFROM2SHORT(BKA_STATUSTEXTON|BKA_AUTOPAGESIZE,
+                     BKA_LAST));
+if (ulPageId) {
+   /* Associate window within page */   WinSetOwner(hNewFrame, WinWindowFromID(hwndDlg, OPTIONS_NOTEBOOK));
+   WinSetParent(hNewFrame, WinWindowFromID(hwndDlg, OPTIONS_NOTEBOOK),FALSE);
+   WinSendDlgItemMsg(hwndDlg, OPTIONS_NOTEBOOK,
+                  BKM_SETPAGEWINDOWHWND,
+                  MPFROMLONG(ulPageId),    /* Page ID */
+                  MPFROMHWND(hNewFrame));  /* Window within page */
+   gPageId[i++] = ulPageId;                  
+}
+}
+
+/* Add page with no tab OPTIONS_NOTEBOOK Notebook */
+{
+/* Important: assign hNewFrame with a newly created notebook form */
+HWND hNewFrame = OpenO_AUTO(hwndDlg, 0);      /* Window to go within page */
+ULONG ulPageId;        /* Page identifier */
+ulPageId=(ULONG)WinSendDlgItemMsg(hwndDlg, OPTIONS_NOTEBOOK,
+                  BKM_INSERTPAGE ,
+                  MPFROMLONG(0),
+                  MPFROM2SHORT(BKA_STATUSTEXTON|BKA_AUTOPAGESIZE,
+                     BKA_LAST));
+if (ulPageId) {
+   /* Associate window within page */   WinSetOwner(hNewFrame, WinWindowFromID(hwndDlg, OPTIONS_NOTEBOOK));
+   WinSetParent(hNewFrame, WinWindowFromID(hwndDlg, OPTIONS_NOTEBOOK),FALSE);
+   WinSendDlgItemMsg(hwndDlg, OPTIONS_NOTEBOOK,
+                  BKM_SETPAGEWINDOWHWND,
+                  MPFROMLONG(ulPageId),    /* Page ID */
+                  MPFROMHWND(hNewFrame));  /* Window within page */
+   gPageId[i++] = ulPageId;                  
+}
+}
+
+/* Add page with no tab OPTIONS_NOTEBOOK Notebook */
+{
+/* Important: assign hNewFrame with a newly created notebook form */
+HWND hNewFrame = OpenO_THREADS(hwndDlg, 0);      /* Window to go within page */
+ULONG ulPageId;        /* Page identifier */
+ulPageId=(ULONG)WinSendDlgItemMsg(hwndDlg, OPTIONS_NOTEBOOK,
+                  BKM_INSERTPAGE ,
+                  MPFROMLONG(0),
+                  MPFROM2SHORT(BKA_STATUSTEXTON|BKA_AUTOPAGESIZE,
+                     BKA_LAST));
+if (ulPageId) {
+   /* Associate window within page */   WinSetOwner(hNewFrame, WinWindowFromID(hwndDlg, OPTIONS_NOTEBOOK));
+   WinSetParent(hNewFrame, WinWindowFromID(hwndDlg, OPTIONS_NOTEBOOK),FALSE);
+   WinSendDlgItemMsg(hwndDlg, OPTIONS_NOTEBOOK,
+                  BKM_SETPAGEWINDOWHWND,
+                  MPFROMLONG(ulPageId),    /* Page ID */
+                  MPFROMHWND(hNewFrame));  /* Window within page */
+   gPageId[i++] = ulPageId;                  
+}
+}
+

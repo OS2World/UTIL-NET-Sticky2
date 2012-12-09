@@ -1,0 +1,6 @@
+/* symbols for resource items */
+#define ID_O_DEBUGFORM  262
+#define LOG_DEBUG 1000
+#define DEBUG_DEBUG 1001
+#define STATUS_DEBUG 1002
+#define STATUS_SPIN 1003

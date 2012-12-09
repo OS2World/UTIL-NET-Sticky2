@@ -1,0 +1,5 @@
+/* symbols for resource items */
+#define ID_CONFIGFORM  258
+#define OPTIONS_FOLDER 1000
+#define OPTIONS_NOTEBOOK 1001
+#define DONE_CONFIG 1003

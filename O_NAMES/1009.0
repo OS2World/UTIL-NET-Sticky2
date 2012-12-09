@@ -1,0 +1,79 @@
+/* Event Clicked/selected - Modify MODIFY_NAMES */
+CHAR aTextValue[512];
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+CHAR name[512], host[512], port[8];
+int  namelen, hostlen, portlen;
+int  nl, hl, pl;
+PMINIRECORDCORE pRecord;
+
+if (!spRecord)
+{
+  anUnsignedValue=(ULONG)WinMessageBox(HWND_DESKTOP, hwndFrame, "You must 'Double Click' a name before you can modify it.", "No record was selected", 256, MB_OK | MB_INFORMATION | MB_MOVEABLE);
+} else {
+  /* Get item text NAME_NAMES Entry Field */
+  WinQueryDlgItemText(hwndDlg, NAME_NAMES, sizeof(name), name);
+  WinQueryDlgItemText(hwndDlg, HOST_NAMES, sizeof(host), host);
+  WinQueryDlgItemText(hwndDlg, PORT_NAMES, sizeof(port), port);    
+  
+  pRecord = CheckHost(host);
+  if (pRecord && pRecord != (PMINIRECORDCORE)spRecord)
+  {
+  anUnsignedValue=(ULONG)WinMessageBox(HWND_DESKTOP, hwndFrame, "Host name is already in the list, change the host.", "Duplicate Host", 256, MB_OK | MB_INFORMATION | MB_MOVEABLE);  
+  } else {
+  if (CheckYes(gLastNameFirst))
+    CvtLastFirst(name, aTextValue);
+  else
+    strcpy(aTextValue, name);
+    
+  anUnsignedValue = inet_addr(host);
+  if (anUnsignedValue != INADDR_NONE)
+    ReverseLookup((char *)&anUnsignedValue, host);
+    
+  namelen = strlen(aTextValue)+1;
+  hostlen = strlen(host)+1;
+  portlen = strlen(port)+1;
+  nl = strlen(spRecord->Record.pszIcon)+1;
+  hl = strlen(spRecord->pszHost)+1;
+  pl = strlen(spRecord->pszPort)+1;
+
+  if (namelen != nl)
+    {
+    FreeSubMem(g1Meg, spRecord->Record.pszIcon, nl);
+    spRecord->Record.pszIcon = (CHAR *)GetSubMem(g1Meg, namelen);
+    } /* end if */
+  if (hostlen != hl)
+    {
+    FreeSubMem(g1Meg, spRecord->pszHost, hl);
+    spRecord->pszHost = (CHAR *)GetSubMem(g1Meg, hostlen);
+    } /* end if */
+  if (portlen != pl)
+    {
+    FreeSubMem(g1Meg, spRecord->pszPort, pl);
+    spRecord->pszPort = (CHAR *)GetSubMem(g1Meg, portlen);
+    } /* end if */
+    
+  strcpy(spRecord->Record.pszIcon, aTextValue);
+  strcpy(spRecord->pszHost, host);  
+  strcpy(spRecord->pszPort, port);
+  
+  WinSendDlgItemMsg(hwndDlg, NAMES_CONTAINER,
+                    CM_INVALIDATERECORD,
+                    MPFROMP(&spRecord),
+                    MPFROM2SHORT(1,CMA_REPOSITION));
+
+  
+  /* Set item text NAME_NAMES Entry Field */
+  WinSetDlgItemText(hwndDlg, NAME_NAMES, 0);
+  WinSetDlgItemText(hwndDlg, HOST_NAMES, 0);
+  WinSetDlgItemText(hwndDlg, PORT_NAMES, 0);
+  
+  spRecord = 0;
+  sNamesChange = 1;  
+  } /* end if */
+
+
+
+} /* end if */
+
+

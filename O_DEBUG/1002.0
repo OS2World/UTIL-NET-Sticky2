@@ -1,0 +1,13 @@
+/* Event Clicked/Selected - Send Status STATUS_DEBUG */
+ULONG anUnsignedValue;
+c_ss = 1;
+/* Is button selected? STATUS_DEBUG Check Box */
+anUnsignedValue=(ULONG)WinQueryButtonCheckstate(hwndDlg,STATUS_DEBUG);
+
+/* Enable window Lines1004 Text */
+WinEnableControl(hwndDlg, 1004, anUnsignedValue);
+
+/* Enable window STATUS_SPIN Spin Button */
+WinEnableControl(hwndDlg, STATUS_SPIN, anUnsignedValue);
+
+

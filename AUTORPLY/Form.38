@@ -1,0 +1,135 @@
+/* Code Section User defined messages - Form STICKY2\Sticky */
+
+
+case WM_USER_STICKY_MSG:
+  {
+  /* Open the form D:\Projects\Sticky2\Sticky */
+  CHAR aTextValue[2048+512];
+  CHAR SL[2048+512] = "< >--- AutoReply";
+  CHAR CRLF[] = "\r\n";
+  CHAR key[128], value[128];
+  LONG anIntegerValue=0;
+  LONG	curloc, alen;
+  CHAR	*c_ptr, *cs_ptr, *e_ptr;
+  APIRET 	rc;
+  PRECVMSG rm;
+  time_t	lt;
+  struct ipaddr {
+    char	b1,b2,b3,b4;
+  } *ipa;
+  HOSTENT *hostent = 0;
+  static ULONG	arnumber=0;
+
+  rm = (PRECVMSG)(PVOIDFROMMP(mp1));
+
+
+  ipa = (struct ipaddr *)&rm->addr;  
+  
+  if (CheckYes(gReverseLookup))
+    hostent = gethostbyaddr((char *)ipa, 4, PF_INET);
+    
+  if (hostent)
+  {
+    sprintf(aTextValue, "%s", hostent->h_name);
+  } else {
+    sprintf(aTextValue, "%d.%d.%d.%d", ipa->b1, ipa->b2, ipa->b3, ipa->b4);  
+  } /* end if */
+
+  /* Set item text NOTE_HOST Group Box */
+  WinSetDlgItemText(hwndDlg, NOTE_FROM, aTextValue);
+  
+  strcat(SL, aTextValue);
+  strcat(SL, CRLF);
+  
+  
+  time(&lt);
+  arnumber++;
+  sprintf(aTextValue, "AutoReply # %d @ %s", arnumber, ctime(&lt));
+  WinSetWindowText(hwndFrame, aTextValue);
+  strcat(SL, aTextValue);
+  strcat(SL, CRLF);
+
+  MsgLog(aTextValue);
+  
+  c_ptr = strchr(rm->msg, 0xE1);
+  if (c_ptr)
+    {
+    *c_ptr = 0;
+    c_ptr++;
+    
+    while (*c_ptr < ' ')
+      c_ptr++;
+      
+    while (c_ptr && *c_ptr)
+      {
+      cs_ptr = strchr(c_ptr, 0x0A);
+      if (cs_ptr)
+        {
+        *cs_ptr = 0;
+        cs_ptr++;
+        }
+      c_ptr++;
+      e_ptr = strchr(c_ptr, ']');
+      if (e_ptr)
+        *e_ptr = 0;
+      else
+        break;
+      strcpy(key, c_ptr);
+      c_ptr = e_ptr + 2;
+      
+      e_ptr = strchr(c_ptr, ']');
+      if (e_ptr)
+        *e_ptr = 0;
+      else
+        break;
+      strcpy(value, c_ptr);
+      
+      strcat(SL, key);
+      strcat(SL, " = ");
+      strcat(SL, value);
+      strcat(SL, CRLF);
+
+      switch (key[0])
+      {
+      case 'R':
+         /* Set item text NOTE_FROM Text */
+         WinSetDlgItemText(hwndDlg, AUTO_HOST, value);
+         break;
+      case 'A':
+         /* Set item text NOTE_FROM Text */
+         WinSetDlgItemText(hwndDlg, AUTO_TIME , value);
+         break;
+      case 'S':
+         /* Set item text NOTE_FROM Text */
+         WinSetDlgItemText(hwndDlg, AUTO_VERSION, value);    
+         break;
+      } /* end switch */
+      c_ptr = cs_ptr;
+      } /* end while */
+
+    } /* end if */
+
+  WinSetDlgItemText(hwndDlg, NOTE_NOTE, rm->msg);
+  strcat(SL, rm->msg);
+  strcat(SL, CRLF);
+  StickyLog(SL);
+
+  
+  rc = FreeSubMem(gSubMemBase, rm->ptr, rm->len);
+  sprintf(aTextValue, "RC from FreeSubMem = %d", rc);
+  
+  }
+break;
+
+case WM_MINMAXFRAME:
+  {
+  SWP *swp;
+    
+  /* hide list box when minimized so it doesn't overwrite icon */
+  swp = PVOIDFROMMP( mp1 );
+  WinShowWindow(WinWindowFromID( hwndDlg, NOTE_CLEAR),
+          !(swp->fl & SWP_MINIMIZE));
+
+  }
+  break;
+  

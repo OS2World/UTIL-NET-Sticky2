@@ -1,0 +1,9 @@
+/* symbols for resource items */
+#define ID_AUTORPLYFORM  265
+#define NOTE_FROM 1001
+#define NOTE_NOTE 1003
+#define NOTE_CLEAR 1004
+#define AUTO_HOST 1002
+#define AUTO_TIME 1008
+#define AUTO_VERSION 1009
+#define NOTE_FROM_TXT 1000

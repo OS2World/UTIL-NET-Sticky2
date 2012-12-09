@@ -1,0 +1,67 @@
+#include "ABOUT.RCH"
+
+DLGTEMPLATE ID_ABOUTFORM PRELOAD MOVEABLE
+BEGIN
+  DIALOG    "About Sticky/2", ID_ABOUTFORM,
+            0,0,226,109,
+            0,  FCF_NOBYTEALIGN | FCF_BORDER | FCF_TITLEBAR | FCF_SYSMENU | FCF_TASKLIST | FCF_ICON 
+  BEGIN
+    CONTROL "Sticky/2 ", 1001,
+            5,95,215,13,
+            WC_STATIC, WS_VISIBLE | WS_PARENTCLIP | WS_SYNCPAINT | 0x00000501 
+            PRESPARAMS PP_FOREGROUNDCOLOR,0x1
+            PRESPARAMS PP_FONTNAMESIZE,"14.Helv"
+    CONTROL "#1", ABOUT_ICON,
+            185,89,20,16,
+            WC_STATIC, WS_VISIBLE | WS_PARENTCLIP | WS_SYNCPAINT | 0x00000003 
+    CONTROL "Okay", 1000,
+            180,3,40,14,
+            WC_BUTTON, WS_VISIBLE | WS_PARENTCLIP | WS_SYNCPAINT | WS_TABSTOP 
+    CONTROL "Version:", 1002,
+            5,85,45,10,
+            WC_STATIC, WS_VISIBLE | WS_PARENTCLIP | WS_SYNCPAINT | 0x00000401 
+    CONTROL "", VERSION_ABOUT,
+            50,85,85,10,
+            WC_STATIC, WS_VISIBLE | WS_PARENTCLIP | WS_SYNCPAINT | 0x00000401 
+            PRESPARAMS PP_FOREGROUNDCOLOR,0x808000
+    CONTROL "Sticky/2 is a program to send those yellow sticky notes across a TCP/IP network.  This OS/2 version has been tested with Sticky for Windows Version 0.87.", 1004,
+            5,63,215,22,
+            WC_STATIC, WS_VISIBLE | WS_PARENTCLIP | WS_SYNCPAINT | 0x00004101 
+            PRESPARAMS PP_FONTNAMESIZE,"8.Helv"
+    CONTROL "If you like this program and want help support the developer. Please feel free to send $5.00 for every copy of Sticky/2 you are using - such a deal!", 1005,
+            5,40,215,23,
+            WC_STATIC, WS_VISIBLE | WS_PARENTCLIP | WS_SYNCPAINT | 0x00004001 
+            PRESPARAMS PP_FONTNAMESIZE,"8.Helv"
+    CONTROL "Andrew J. Wysocki", 1006,
+            5,31,105,9,
+            WC_STATIC, WS_VISIBLE | WS_PARENTCLIP | WS_SYNCPAINT | 0x00000001 
+            PRESPARAMS PP_FOREGROUNDCOLOR,0x8040
+    CONTROL "AB Software", 1007,
+            5,22,105,9,
+            WC_STATIC, WS_VISIBLE | WS_PARENTCLIP | WS_SYNCPAINT | 0x00000001 
+            PRESPARAMS PP_FOREGROUNDCOLOR,0x8040
+    CONTROL "122 Richland Road", 1008,
+            5,13,105,9,
+            WC_STATIC, WS_VISIBLE | WS_PARENTCLIP | WS_SYNCPAINT | 0x00000001 
+            PRESPARAMS PP_FOREGROUNDCOLOR,0x8040
+    CONTROL "Norwood, MA 02062-5540 USA", 1009,
+            5,3,145,10,
+            WC_STATIC, WS_VISIBLE | WS_PARENTCLIP | WS_SYNCPAINT | 0x00000001 
+            PRESPARAMS PP_FOREGROUNDCOLOR,0x8040
+    CONTROL "http://www.BearSoft.com/Sticky2/", 1011,
+            110,22,110,9,
+            WC_STATIC, WS_VISIBLE | WS_PARENTCLIP | WS_SYNCPAINT | 0x00000401 
+            PRESPARAMS PP_FOREGROUNDCOLOR,0x10101
+            PRESPARAMS PP_FONTNAMESIZE,"8.Helv"
+    CONTROL "awysocki@BearSoft.com", 1012,
+            110,31,110,9,
+            WC_STATIC, WS_VISIBLE | WS_PARENTCLIP | WS_SYNCPAINT | 0x00000401 
+            PRESPARAMS PP_FOREGROUNDCOLOR,0x10101
+            PRESPARAMS PP_FONTNAMESIZE,"8.Helv"
+  END
+END
+
+HELPSUBTABLE ID_ABOUTFORM
+BEGIN
+END
+ICON ID_ABOUTFORM "D:\\PROJECTS\\STICKY2\\STICKY3.ICO"

@@ -1,0 +1,12 @@
+/* Event Opened - Form STICKY2\REPLY */
+CHAR aTextValue[255]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+
+
+/* Set text limit REPLY_TEXT Multi-Line Entry Field */
+WinSendDlgItemMsg(hwndDlg, REPLY_TEXT,
+                  MLM_SETTEXTLIMIT,
+                  MPFROMLONG(2048),  /* New text limit */
+                  0);
+

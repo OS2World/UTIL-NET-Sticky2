@@ -1,0 +1,31 @@
+/* Event Clicked/selected - Exit  1002 */
+CHAR aTextValue[255]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+HWND	hwndNext;
+
+hwndNext = WinWindowFromID(HWND_DESKTOP, ID_STICKYFORM);
+sprintf(aTextValue, "hwnd=%d", hwndNext);
+MsgLog(aTextValue);
+while (hwndNext!=NULLHANDLE)
+{
+WinSendMsg(hwndNext, WM_CLOSE, 0, 0);
+hwndNext = WinWindowFromID(HWND_DESKTOP, ID_STICKYFORM);
+sprintf(aTextValue, "hwnd=%d", hwndNext);
+MsgLog(aTextValue);
+
+} /* end while */
+
+hwndNext = WinWindowFromID(HWND_DESKTOP, ID_AUTORPLYFORM);
+sprintf(aTextValue, "hwnd=%d", hwndNext);
+MsgLog(aTextValue);
+
+while (hwndNext!=NULLHANDLE)
+{
+WinSendMsg(hwndNext, WM_CLOSE, 0, 0);
+hwndNext = WinWindowFromID(HWND_DESKTOP, ID_AUTORPLYFORM);
+sprintf(aTextValue, "hwnd=%d", hwndNext);
+MsgLog(aTextValue);
+
+} /* end while */
+

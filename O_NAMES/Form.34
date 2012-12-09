@@ -1,0 +1,11 @@
+/* Code Section Extra include files - Form STICKY2\O_NAMES */
+
+
+#include "sticky2.h"
+#include "data.h"
+#include "pmfuncs.h"
+
+static SHORT sNamesChange = 0;
+static PO_NAMES_NAMES_CONTAINER_REC spRecord;
+
+ULONG c_s, c_lnf, c_p, c_rev;

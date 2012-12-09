@@ -1,0 +1,11 @@
+/* symbols for resource items */
+#define ID_O_CONFIGFORM  263
+#define SEND_CONFIG 1000
+#define REPLY_CONFIG 1001
+#define BACKGROUND_CONFIG 1002
+#define BEEP_CONFIG 1003
+#define FREQUENCY_CONFIG 1004
+#define DURATION_CONFIG 1005
+#define SURE_CONFIG 1009
+#define MINI_CONFIG 1010
+#define CLEAR_CONFIG 1012

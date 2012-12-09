@@ -1,0 +1,13 @@
+/* Event Closed - Form STICKY2\Main */
+CHAR aTextValue[255]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+SWP swp;
+
+WinStoreWindowPos("Sticky/2", "WINDOW_POS", hwndFrame);
+
+WinQueryWindowPos(hwndFrame, &swp);
+MsgLog("Saving Window Location/Position");
+
+//sprintf(aTextValue, "FL=%x, cy=%x, cx=%x, y=%d, x=%d", swp.fl, swp.cy, swp.cx, swp.y, swp.x);
+//MsgLog(aTextValue);

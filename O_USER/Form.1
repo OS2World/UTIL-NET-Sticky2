@@ -1,0 +1,13 @@
+/* Event Opened - Form STICKY2\O_USER */
+CHAR aTextValue[255]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+
+
+/* Set item text O_USER_NAME Entry Field */
+WinSetDlgItemText(hwndDlg, O_USER_NAME, gMyName);
+
+anUnsignedValue = (ULONG)gethostname(aTextValue, sizeof(aTextValue));
+/* Set item text O_USER_IP Text */
+WinSetDlgItemText(hwndDlg, O_USER_IP, aTextValue);
+

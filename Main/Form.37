@@ -1,0 +1,73 @@
+/* Code Section Top of window procedure - Form STICKY2\Main */
+// char locbuf[128];
+
+// {
+
+// sprintf(locbuf, "MAIN Msg=%d 0x%x", msg, msg);
+// MsgLog(locbuf);
+// }
+
+switch (msg)
+{
+//   case WM_ADJUSTFRAMEPOS:
+//      {
+//      SWP *swp;
+//      swp = PVOIDFROMMP(mp1);
+//      sprintf(locbuf, "ADJUSTFRAMEPOS %x y=%d, x=%d", swp->fl, swp->y, swp->x);
+//      MsgLog(locbuf);
+//      }
+//      break;
+      
+//   case WM_ADJUSTWINDOWPOS:
+//      {
+//      SWP *swp;
+//      swp = PVOIDFROMMP(mp1);
+//      sprintf(locbuf, "ADJUSTWINDOWPOS %x y=%d, x=%d", swp->fl, swp->y, swp->x);
+//      MsgLog(locbuf);
+//      }
+//      break;
+      
+//   case WM_WINDOWPOSCHANGED:
+//      {
+//      SWP *swp;
+//      swp = PVOIDFROMMP(mp1);
+//      sprintf(locbuf, "ADJUSTWINDOWPOS %x y=%d, x=%d", swp->fl, swp->y, swp->x);
+//      MsgLog(locbuf);
+//      }
+//      break;
+      
+      
+   case WM_COMMAND :
+      switch (SHORT1FROMMP(mp1)) {
+      /* Button SEND_MAIN Clicked/Selected */
+      case PUM_SEND:
+         WinPostMsg(hwndDlg, msg, MPFROM2SHORT(SEND_MAIN, 0), 0);
+         break;
+      case PUM_EXIT:
+         WinPostMsg(hwndDlg, msg, MPFROM2SHORT(EXIT_MAIN, 0), 0);
+         break;
+      case PUM_CONFIG:
+         WinPostMsg(hwndDlg, msg, MPFROM2SHORT(CONFIG_MAIN, 0), 0);
+         break;
+      case PUM_CLEAR:
+         WinPostMsg(hwndDlg, msg, MPFROM2SHORT(CLEAR_MAIN, 0), 0);
+         break;
+      case PUM_ABOUT:
+         WinPostMsg(hwndDlg, msg, MPFROM2SHORT(ABOUT_MAIN, 0), 0);
+         break;
+      case PUM_MAXIMIZE:
+      WinSetParent(WinWindowFromID(HWND_OBJECT, FID_MINMAX), 
+                   hwndFrame, FALSE);
+      WinSetParent(WinWindowFromID(HWND_OBJECT, FID_SYSMENU), 
+                   hwndFrame, FALSE);    
+      WinPostMsg(hwndFrame, WM_UPDATEFRAME, MPFROMLONG(FCF_MINMAX | FCF_SYSMENU), 0);
+      WinSetWindowText(WinWindowFromID(hwndFrame, FID_TITLEBAR), "Sticky/2");      
+      WinInvalidateRect(hwndFrame, NULL, TRUE);
+      
+         WinSetWindowPos(hwndDlg, NULLHANDLE, 0, 0, 0, 0, SWP_MAXIMIZE);      
+         break;
+         
+      } /* end switch */
+      break;
+} /* end switch */
+

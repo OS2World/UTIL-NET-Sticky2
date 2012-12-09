@@ -1,0 +1,19 @@
+/* Event Clicked/Selected - Port 6711  1010 */
+CHAR aTextValue[255]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+
+/* Disable window PORT_NAMES Entry Field */
+anIntegerValue = WinQueryButtonCheckstate(hwndDlg, P6711_NAMES);
+if (anIntegerValue)
+{
+anIntegerValue = 0;
+} else {
+anIntegerValue = 1;
+} /* end if */
+
+WinEnableControl(hwndDlg, PORT_NAMES, anIntegerValue);
+
+WinEnableControl(hwndDlg, 1003, anIntegerValue);
+
+c_p = 1;

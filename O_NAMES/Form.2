@@ -1,0 +1,105 @@
+/* Event Closed - Form STICKY2\O_NAMES */
+CHAR aTextValue[512];
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+ULONG saveLNF;
+
+  MsgLog("Closing O_NAMES");
+  
+  saveLNF = CheckYes(gLastNameFirst);
+  
+if (c_s)
+{
+anUnsignedValue=(ULONG)WinQueryButtonCheckstate(hwndDlg,SORT_NAMES);
+  strcpy(gSortNameList, anUnsignedValue ? gYes : gNo);    
+  PutString(S_SortNameList, gSortNameList); 
+} /* end if */
+
+if (c_lnf)
+{
+anUnsignedValue=(ULONG)WinQueryButtonCheckstate(hwndDlg,LAST_NAMES);
+  strcpy(gLastNameFirst, anUnsignedValue ? gYes : gNo);    
+  PutString(S_LastNameFirst, gLastNameFirst); 
+} /* end if */
+
+if (c_rev)
+{
+  anUnsignedValue=(ULONG)WinQueryButtonCheckstate(hwndDlg,REVERSELOOKUP_NAMES);
+  strcpy(gReverseLookup, anUnsignedValue ? gYes : gNo);    
+  PutString(S_ReverseLookup, gReverseLookup); 
+} /* end if */
+
+if (c_p)
+{
+  anUnsignedValue=(ULONG)WinQueryButtonCheckstate(hwndDlg,P6711_NAMES);
+  strcpy(gP6711, anUnsignedValue ? gYes : gNo);    
+  PutString(S_Default6711, gP6711); 
+} /* end if */
+  
+
+ 
+  if (sNamesChange)
+  {
+   PO_NAMES_NAMES_CONTAINER_REC pRecord;
+   ULONG	index = 1;
+   CHAR		locbuf[64];
+   
+   PutStringN("", "");  /* Delete all Names */
+   
+   pRecord=(PO_NAMES_NAMES_CONTAINER_REC)WinSendDlgItemMsg(hwndDlg, NAMES_CONTAINER,
+                     CM_QUERYRECORD,
+                     MPFROMP(0), /* pointer to reference record */
+                     MPFROM2SHORT(CMA_FIRST, CMA_ITEMORDER));
+   while (pRecord)
+   {
+   sprintf(locbuf, "Name%04d", index);
+   
+   if(saveLNF)
+     CvtFirstLast(pRecord->Record.pszIcon, aTextValue);
+   PutStringN(locbuf, saveLNF ? aTextValue : pRecord->Record.pszIcon);
+   sprintf(locbuf, "Host%04d", index);
+   PutStringN(locbuf, pRecord->pszHost);
+   if (CheckNo(gP6711))
+     {
+     sprintf(locbuf, "Port%04d", index);
+     PutStringN(locbuf, pRecord->pszPort);
+     } /* end if */
+
+   /* Get next item NAMES_CONTAINER Container */
+   pRecord=(PO_NAMES_NAMES_CONTAINER_REC)WinSendDlgItemMsg(hwndDlg, NAMES_CONTAINER,
+                     CM_QUERYRECORD,
+                     MPFROMP(pRecord), /* pointer to reference record */
+                     MPFROM2SHORT(CMA_NEXT, CMA_ITEMORDER));
+   index++;
+   } /* end while */
+
+  sprintf(locbuf, "%d", index-1);
+  PutStringN("NameCount", locbuf);
+                    
+  } /* end if */
+  
+  {
+   CNRINFO cnrinfo;
+   SWP 	swp;
+   
+   WinQueryWindowPos(WinWindowFromID(hwndDlg, NAMES_CONTAINER), &swp);
+
+   cnrinfo.cb=sizeof(CNRINFO);
+   cnrinfo.flWindowAttr=CV_DETAIL | CA_DETAILSVIEWTITLES | CA_MIXEDTARGETEMPH;
+   WinSendDlgItemMsg(hwndDlg, NAMES_CONTAINER,
+                     CM_QUERYCNRINFO,
+                     MPFROMP(&cnrinfo),
+                     MPFROMLONG(CMA_FLWINDOWATTR | CMA_XVERTSPLITBAR));
+
+  sprintf(gSplitPercentC, "%d", cnrinfo.xVertSplitbar);
+  PutString(S_SplitPercentConfig, gSplitPercentC);
+  }
+  
+  WinSendDlgItemMsg(hwndDlg, NAMES_CONTAINER,
+                         CM_REMOVERECORD,
+                         MPFROMP(0), /* all Records */
+                         MPFROM2SHORT(0,CMA_FREE | CMA_INVALIDATE)); /* delete all records */
+
+  FreeAllSubMem(g1Meg);
+  g1Meg = 0;
+

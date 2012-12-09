@@ -1,0 +1,11 @@
+#include <os2.h>
+#include "pop_menu.rch"
+
+MENU POPUP_MENU
+{
+        MENUITEM "~Send",       IDM_SEND
+        MENUITEM "~Config",     IDM_CONFIG
+        MENUITEM "C~lear",      IDM_CLEAR
+        MENUITEM "E~xit",       IDM_EXIT
+}
+

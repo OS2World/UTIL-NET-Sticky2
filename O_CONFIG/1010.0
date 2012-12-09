@@ -1,0 +1,6 @@
+/* Event Clicked/Selected - Mini ICON when shrunk MINI_CONFIG */
+CHAR aTextValue[255]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+
+c_mini = 1;

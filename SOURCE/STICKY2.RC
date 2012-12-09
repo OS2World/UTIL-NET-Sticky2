@@ -1,0 +1,50 @@
+#include <os2.h>
+
+/* The following imported from the file E:\Projects\Sticky2\RESOURCE.VPC.*/
+
+#include "Sticky2.RCH"
+BITMAP 1 "e:\\projects\\sticky2\\STICKY3.ICO"
+POINTER ICON_STICKY "e:\\projects\\sticky2\\STICKY3.ICO"
+POINTER ICON_SUNSMILE "e:\\Projects\\Sticky2\\SUNSMILE.ICO"
+POINTER ICON_XMAIL "e:\\Projects\\Sticky2\\XMAIL.ICO"
+POINTER ICON_TOOLS "e:\\Projects\\Sticky2\\TOOLS.ICO"
+POINTER ICON_ML1 "e:\\Projects\\Sticky2\\ML1.ICO"
+POINTER ICON_DEBUG "e:\\Projects\\Sticky2\\DEBUG.ICO"
+POINTER ICON_AUTOREPLY "e:\\Projects\\Sticky2\\sticky7.ICO"
+POINTER ICON_BIGSTICKY "e:\\Projects\\Sticky2\\sticky.ico"
+POINTER ICON_SCROLL "e:\\Projects\\Sticky2\\scroll.ico"
+POINTER ICON_WS1 "e:\\Projects\\Sticky2\\ws1.ico"
+
+/* The preceeding imported from the file E:\Projects\Sticky2\RESOURCE.VPC.*/
+
+rcinclude ABOUT.RC
+rcinclude AUTORPLY.RC
+rcinclude CONFIG.RC
+rcinclude Main.RC
+rcinclude O_AUTO.RC
+rcinclude O_CONFIG.RC
+rcinclude O_DEBUG.RC
+rcinclude O_NAMES.RC
+rcinclude O_THREADS.RC
+rcinclude O_USER.RC
+rcinclude POPUP.RC
+rcinclude REPLY.RC
+rcinclude Send.RC
+rcinclude STICKY.RC
+HELPTABLE  1
+  BEGIN
+    HELPITEM  268, 268, 1050
+    HELPITEM  265, 265, 1600
+    HELPITEM  258, 258, 1200
+    HELPITEM  256, 256, 1000
+    HELPITEM  267, 267, 2500
+    HELPITEM  263, 263, 2300
+    HELPITEM  262, 262, 2200
+    HELPITEM  264, 264, 2400
+    HELPITEM  269, 269, 2400
+    HELPITEM  261, 261, 2100
+    HELPITEM  266, 266, 1000
+    HELPITEM  260, 260, 1700
+    HELPITEM  257, 257, 1100
+    HELPITEM  259, 259, 1800
+  END

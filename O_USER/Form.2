@@ -1,0 +1,14 @@
+/* Event Closed - Form STICKY2\O_USER */
+CHAR aTextValue[255]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+CHAR *c_ptr;
+
+MsgLog("Closing O_USER");
+
+  c_ptr = (CHAR *)TextChanged(hwndDlg, (ULONG)O_USER_NAME);
+  if (c_ptr)
+    {
+    PutString(S_MyName, c_ptr);
+    strcpy(gMyName, c_ptr);
+    }

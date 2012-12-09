@@ -1,0 +1,10 @@
+/* Event Sized - Form STICKY2\Main */
+CHAR aTextValue[255]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+SHORT cxOld=SHORT1FROMMP(mp1);   /* old width  */
+SHORT cyOld=SHORT2FROMMP(mp1);   /* old height */
+SHORT cxNew=SHORT1FROMMP(mp2);   /* new width  */
+SHORT cyNew=SHORT2FROMMP(mp2);   /* new height */
+
+return(WinDefDlgProc(hwndDlg, msg, mp1, mp2));

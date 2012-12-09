@@ -1,0 +1,94 @@
+/* Event Opened - Form STICKY2\O_NAMES */
+CHAR aTextValue[1024];
+CHAR name[512];
+CHAR host[512];
+CHAR port[8]="6711";
+CHAR locbuf[128];
+CHAR *last, *first;
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+USHORT LastNameFirst = 1;
+APIRET rc;
+ULONG	index;
+
+sNamesChange = 0;
+spRecord = 0;
+c_s = c_lnf = c_p = 0;
+
+  rc = AllocInitSubMem(&g1Meg, ONE_MEG_NAMES);
+  if (rc)
+    {
+    sprintf(locbuf, "Error allocating memory RC=%d", rc);
+    MsgLog(locbuf);
+    } /* end if */
+
+
+SetHwndID(hwndDlg, NAMES_CONTAINER);
+ 
+rc = 0;
+index = 1;
+while (rc == 0 && index < MAXNAMES)
+{
+  sprintf(locbuf, "Name%04d", index);
+  rc = GetStringN(locbuf, "", name, sizeof(name));
+
+  if (rc)
+    break;
+
+  sprintf(locbuf, "Host%04d", index);
+  GetStringN(locbuf, "", host, sizeof(host));
+  if (CheckNo(gP6711))
+    {
+    sprintf(locbuf, "Port%04d", index); 
+    GetStringN(locbuf, "6711", port, sizeof(port));
+    } 
+    
+  AddName(name, host, port);	
+
+
+  index++;
+
+} /* end while */
+
+  SortNames();
+
+
+/* View as details IP_CONTAINER Container */
+{
+   CNRINFO cnrinfo;
+   SWP 	swp;
+   char	locbuf[32];
+   
+   WinQueryWindowPos(WinWindowFromID(hwndDlg, IP_CONTAINER), &swp);
+
+   if (atol(gSplitPercentC) == -1)
+   {
+   cnrinfo.xVertSplitbar = (swp.cx * 40) / 100;
+   } else {
+   cnrinfo.xVertSplitbar = atol(gSplitPercentC);
+   } /* end if */
+
+	
+   cnrinfo.cb=sizeof(CNRINFO);
+   cnrinfo.flWindowAttr=CV_DETAIL | CA_DETAILSVIEWTITLES | CA_MIXEDTARGETEMPH;
+   WinSendDlgItemMsg(hwndDlg, NAMES_CONTAINER,
+                     CM_SETCNRINFO,
+                     MPFROMP(&cnrinfo),
+                     MPFROMLONG(CMA_FLWINDOWATTR | CMA_XVERTSPLITBAR));
+}
+
+
+
+WinCheckButton(hwndDlg, SORT_NAMES, CheckYes(gSortNameList));
+WinCheckButton(hwndDlg, LAST_NAMES, CheckYes(gLastNameFirst));
+WinCheckButton(hwndDlg, P6711_NAMES, CheckYes(gP6711));
+WinCheckButton(hwndDlg, REVERSELOOKUP_NAMES, CheckYes(gReverseLookup));
+
+if (CheckYes(gP6711))
+  {
+  WinEnableControl(hwndDlg, PORT_NAMES, FALSE);
+  WinEnableControl(hwndDlg, 1003, FALSE);
+  }
+  
+
+

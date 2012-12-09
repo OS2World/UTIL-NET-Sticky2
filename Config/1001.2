@@ -1,0 +1,38 @@
+/* Event Page selected - Notebook OPTIONS_NOTEBOOK */
+CHAR aTextValue[255]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+/* pointer to a page select notify structure */
+PPAGESELECTNOTIFY pPageSelectNotify = PVOIDFROMMP(mp2);
+ULONG ulPageId = pPageSelectNotify->ulPageIdNew;
+
+if (!gConfigTerm)
+/* Select an item OPTIONS_FOLDER Container */
+{
+   PMINIRECORDCORE pRecord;
+   INT		i = 0;
+   
+   while (gPageId[i])
+   {
+   if (gPageId[i] == ulPageId)
+     break;
+   i++;
+   } /* end while */
+   
+   pRecord=(PMINIRECORDCORE)WinSendDlgItemMsg(hwndDlg, OPTIONS_FOLDER,
+                        CM_QUERYRECORD,
+                        MPFROMP(0), /* pointer to reference record */
+                        MPFROM2SHORT(CMA_FIRST, CMA_ITEMORDER));
+      
+   if (i<gOptions)
+   {
+   for ( ;i ;i-- )
+     pRecord = pRecord->preccNextRecord;
+   } /* end if */
+   
+   gSetSelect = 1;
+   WinSendDlgItemMsg(hwndDlg, OPTIONS_FOLDER,
+                     CM_SETRECORDEMPHASIS,
+                     MPFROMP(pRecord), /* pointer to reference record */
+                     MPFROM2SHORT(TRUE, CRA_SELECTED));
+}

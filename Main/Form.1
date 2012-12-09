@@ -1,0 +1,148 @@
+/* Event Opened - Form THREAD\Main */
+CHAR aTextValue[255]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+int	index;
+static	char Init=0;
+char Yes[] = "Yes";
+char No[] = "No";
+CHAR *e_ptr;
+SWP tswp;
+
+
+gHwndFrame = hwndFrame;
+
+
+/* Get item text VERSION_MAIN Text */
+WinQueryDlgItemText(hwndDlg, VERSION_MAIN, sizeof(gVersion), gVersion);
+
+GetString(S_DebugLog, No, gDebugLog, sizeof(gDebugLog));
+GetString(S_LogSticky, Yes, gLogSticky, sizeof(gLogSticky));
+GetString(S_SendStatus, Yes, gSendStatus, sizeof(gSendStatus));
+GetString(S_SendLines, "200", gSendLines, sizeof(gSendLines));
+
+
+GetString(S_CloseAfterSend, No, gAfterSend, sizeof(gAfterSend));
+GetString(S_CloseAfterReply, No, gAfterReply, sizeof(gAfterReply));
+GetString(S_PopUpSticky, Yes, gPUS, sizeof(gPUS));
+GetString(S_Frequency, "2000", gFreq, sizeof(gFreq));
+GetString(S_Duration, "500", gDur, sizeof(gDur));
+GetString(S_Beep, Yes, gBeep, sizeof(gBeep));
+
+GetString(S_SortNameList, Yes, gSortNameList, sizeof(gSortNameList));
+GetString(S_LastNameFirst, Yes, gLastNameFirst, sizeof(gLastNameFirst));
+//GetString(S_MaxStatus, "100", gMaxStatus, sizeof(gMaxStatus));
+GetString(S_SplitPercentSend, "-1", gSplitPercent, sizeof(gSplitPercent));
+GetString(S_SplitPercentConfig, "-1", gSplitPercentC, sizeof(gSplitPercentC));
+GetString(S_Default6711, Yes, gP6711, sizeof(gP6711));
+GetString(S_AreYouSure, Yes, gSure, sizeof(gSure));
+GetString(S_AutoReply, No, gAutoReply, sizeof(gAutoReply));
+GetString(S_AutoVer, Yes, gAutoVer, sizeof(gAutoVer));
+GetString(S_AutoTime, Yes, gAutoTime, sizeof(gAutoTime));
+GetString(S_AutoName, Yes, gAutoName, sizeof(gAutoName));
+GetString(S_AutoText, "", gAutoText, sizeof(gAutoText));
+GetString(S_StickyIcon, "No", gStickyIcon, sizeof(gStickyIcon));
+GetString(S_ReverseLookup, "Yes", gReverseLookup, sizeof(gReverseLookup));
+GetString(S_ClearAuto, "0", gClearAuto, sizeof(gClearAuto));
+GetString(S_Threads, "1", gThreads, sizeof(gThreads));
+
+    e_ptr = strchr(gAutoText, '~');
+    while (e_ptr)
+      {
+      *e_ptr = '\r';
+      e_ptr = strchr(e_ptr, '~');
+      } /* end while */
+    e_ptr = strchr(gAutoText, '^');
+    while (e_ptr)
+      {
+      *e_ptr = '\n';
+      e_ptr = strchr(e_ptr, '^');
+      } /* end while */
+
+
+
+
+GetString(S_Socket, gSocketString, aTextValue, sizeof(aTextValue));
+gSocket = atoi(aTextValue);
+GetString(S_MyName, "", gMyName, sizeof(gMyName));
+
+if (!Init)
+  {
+  RecvInit(gSocket, hwndFrame);
+  
+  for (index=0 ;index < atol(gThreads) ; index++)
+    {
+    SockInit(index, hwndFrame);
+    } /* end for */
+
+  Init=1;
+  } /* end if */
+
+
+/* Hide window STICKY_ICO Icon */
+WinShowWindow(WinWindowFromID(hwndDlg, STICKY_ICO),FALSE);
+
+/* Set graphic handle STICKY_ICO Icon */
+/* Important: assign hptr to the icon handle to be used */
+{
+  HPOINTER hptr;
+  hptr=WinLoadPointer(HWND_DESKTOP, 0L, ICON_BIGSTICKY);
+
+  WinSendDlgItemMsg(hwndDlg, STICKY_ICO,
+                  SM_SETHANDLE,
+                  MPFROMLONG(hptr),   /* Icon handle */
+                  0);
+  WinInvalidateRect(WinWindowFromID(hwndDlg, STICKY_ICO),0,TRUE);
+
+}
+
+
+WinQueryWindowPos(hwndDlg, &gSWP);
+
+MsgLog("Restoring Window Position");
+if(WinRestoreWindowPos("Sticky/2", "WINDOW_POS", hwndDlg) == FALSE)
+  {
+  SWP swp1, swp2; 
+  
+  MsgLog("Restore Window Pos not found - Defaults");
+    
+  WinQueryWindowPos(WinWindowFromID(hwndDlg, SEND_MAIN), &swp1);
+  WinQueryWindowPos(WinWindowFromID(hwndDlg, FID_TITLEBAR), &swp2);
+            /* hide list box when minimized so it doesn't overwrite icon */
+  WinSetWindowPos(hwndDlg, NULLHANDLE, 0, 0, gSWP.cx, swp1.cy + swp2.cy + 10, SWP_SIZE);
+  }
+  
+  WinQueryWindowPos(hwndDlg, &tswp);
+
+  sprintf(aTextValue, "After Restore -> tswp.fl = %x", tswp.fl);
+  MsgLog(aTextValue);
+
+  
+  if (tswp.y < 0 || tswp.x < 0)
+    {
+    WinSetWindowPos(hwndDlg, HWND_TOP, abs(tswp.y), abs(tswp.x), 0, 0, SWP_MOVE);  
+    } /* end if */
+
+  if (CheckYes(gStickyIcon) && tswp.fl & SWP_RESTORE)
+    {
+    MsgLog("Sticky/2 ICON Mode");
+    WinSetParent(WinWindowFromID(hwndDlg, FID_MINMAX), HWND_OBJECT, FALSE);
+    WinSetParent(WinWindowFromID(hwndDlg, FID_SYSMENU), HWND_OBJECT, FALSE);    
+    WinSendMsg(hwndDlg, WM_UPDATEFRAME, MPFROMLONG(FCF_MINMAX | FCF_SYSMENU), 0);
+    WinShowWindow(WinWindowFromID( hwndDlg, SEND_MAIN), 0);
+    WinShowWindow(WinWindowFromID( hwndDlg, STICKY_ICO), 1);
+    WinSetWindowText(WinWindowFromID(hwndFrame, FID_TITLEBAR), 0);
+    }
+  
+
+
+if (strlen(gMyName) == 0)
+{
+  anUnsignedValue=(ULONG)WinMessageBox(HWND_DESKTOP, hwndFrame, "Your name is not set.  Config screen will be displayed, please set your name.", "Name not Set", 256, MB_OK | MB_INFORMATION | MB_MOVEABLE);
+  WinPostMsg(hwndFrame, WM_COMMAND, MPFROM2SHORT(CONFIG_MAIN, 0), 0);
+} /* end if */
+
+
+
+
+

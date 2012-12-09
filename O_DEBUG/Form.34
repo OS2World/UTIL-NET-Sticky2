@@ -1,0 +1,7 @@
+/* Code Section Extra include files - Form STICKY2\O_DEBUG */
+
+#include "sticky2.h"
+#include "data.h"
+
+int	c_dl, c_ls, c_ss;
+

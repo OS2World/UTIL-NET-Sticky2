@@ -1,0 +1,14 @@
+/* Event Clicked/selected - Send  1000 */
+CHAR aTextValue[255]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+
+/* Open the modal form E:\Projects\Sticky2\Send */
+{
+   USHORT usReturn;
+   HWND hNewFrame;
+   hNewFrame = OpenSEND(hwndDlg, 0);
+   usReturn = (USHORT) WinProcessDlg(hNewFrame);
+}
+
+

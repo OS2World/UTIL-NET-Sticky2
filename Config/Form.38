@@ -1,0 +1,20 @@
+/* Code Section User defined messages - Form STICKY2\CONFIG */
+
+
+case WM_MINMAXFRAME:
+  {
+  SWP *swp; 
+  char locbuf[128];
+  APIRET	rc;
+  
+  swp = PVOIDFROMMP( mp1 );
+ /* hide list box when minimized so it doesn't overwrite icon */
+  
+  WinShowWindow(WinWindowFromID( hwndDlg, DONE_CONFIG),
+          !(swp->fl & SWP_MINIMIZE));
+  WinShowWindow(WinWindowFromID( hwndDlg, OPTIONS_FOLDER),
+          !(swp->fl & SWP_MINIMIZE));
+
+  }
+  break;
+  

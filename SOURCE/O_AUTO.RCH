@@ -1,0 +1,7 @@
+/* symbols for resource items */
+#define ID_O_AUTOFORM  267
+#define ENABLE_AUTO 1000
+#define VERSION_AUTO 1001
+#define TIME_AUTO 1002
+#define NAME_AUTO 1003
+#define TEXT_AUTO 1005

@@ -1,0 +1,24 @@
+/* Event Clicked/selected - Reply NOTE_REPLY */
+CHAR aTextValue[255]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+ULONG ipa;
+HOSTENT *phe;
+
+/* Open the form D:\Projects\Sticky2\Reply */
+{
+
+   HWND hNewFrame;
+   hNewFrame = OpenREPLY(HWND_DESKTOP, 0);
+   /* Get item text NOTE_FROM Text */
+   WinQueryDlgItemText(hwndDlg, NOTE_FROM, sizeof(aTextValue), aTextValue);
+  
+   if ((ipa = inet_addr(aTextValue)) == INADDR_NONE)
+     {
+     if (phe = gethostbyname(aTextValue))
+       ipa = *((ULONG *)phe->h_addr);
+     } /* endif */
+  
+   
+  WinPostMsg(hNewFrame, WM_USER_IP, MPFROMLONG(ipa), 0);
+}

@@ -1,0 +1,15 @@
+/* Event Clicked/Selected - Enable Auto Reply ENABLE_AUTO */
+CHAR aTextValue[255]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+
+
+c_e = 1;
+/* Is button selected? BEEP_CONFIG Check Box */
+anUnsignedValue=(ULONG)WinQueryButtonCheckstate(hwndDlg,ENABLE_AUTO);
+
+WinEnableControl(hwndDlg, 1004, anUnsignedValue);
+WinEnableControl(hwndDlg, VERSION_AUTO, anUnsignedValue);
+WinEnableControl(hwndDlg, TIME_AUTO, anUnsignedValue);
+WinEnableControl(hwndDlg, NAME_AUTO, anUnsignedValue);
+WinEnableControl(hwndDlg, TEXT_AUTO, anUnsignedValue);

@@ -1,0 +1,54 @@
+/* Event Clicked/selected - Add ADD_NAMES */
+CHAR aTextValue[255]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+CHAR name[512], host[512], port[8];
+PMINIRECORDCORE pRecord;
+
+/* Get item text NAME_NAMES Entry Field */
+WinQueryDlgItemText(hwndDlg, NAME_NAMES, sizeof(name), name);
+WinQueryDlgItemText(hwndDlg, HOST_NAMES, sizeof(host), host);
+
+/* Is button selected? P6711_NAMES Check Box */
+if (WinQueryButtonCheckstate(hwndDlg,P6711_NAMES))
+  strcpy(port, "6711");
+else
+  WinQueryDlgItemText(hwndDlg, PORT_NAMES, sizeof(port), port);
+
+pRecord = CheckHost(host);
+if (pRecord)
+{
+  anUnsignedValue=(ULONG)WinMessageBox(HWND_DESKTOP, hwndFrame, "This host is already in the list.  Modify the name to change Name or Port", "Host already in list", 256, MB_OK | MB_INFORMATION | MB_MOVEABLE);
+} else {
+
+  sNamesChange = 1;
+  
+  anUnsignedValue = inet_addr(host);
+  if (anUnsignedValue != INADDR_NONE)
+    ReverseLookup((char *)&anUnsignedValue, host);
+  
+  pRecord = AddName(name, host, port);
+
+  
+  SortNames();
+
+  WinSendDlgItemMsg(hwndDlg, NAMES_CONTAINER,
+                    CM_SETRECORDEMPHASIS,
+                    MPFROMP(pRecord), /* pointer to reference record */
+                    MPFROM2SHORT(TRUE, CRA_SELECTED));
+
+/* Clear text NAME_NAMES Entry Field */
+WinSetDlgItemText(hwndDlg, NAME_NAMES, "");
+/* Clear text HOST_NAMES Entry Field */
+WinSetDlgItemText(hwndDlg, HOST_NAMES, "");
+/* Clear text PORT_NAMES Entry Field */
+WinSetDlgItemText(hwndDlg, PORT_NAMES, "");
+
+
+
+
+} /* end if */
+
+
+
+

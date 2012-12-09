@@ -1,0 +1,40 @@
+/* Event Closed - Form STICKY2\O_DEBUG */
+CHAR aTextValue[255]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+
+MsgLog("Closing O_DEBUG");
+
+if (c_dl)
+{
+anUnsignedValue=(ULONG)WinQueryButtonCheckstate(hwndDlg,DEBUG_DEBUG);
+  
+  PutString(S_DebugLog, anUnsignedValue ? gYes : gNo); 
+  strcpy(gDebugLog, anUnsignedValue ? gYes : gNo);  
+} /* end if */
+
+if (c_ls)
+{
+anUnsignedValue=(ULONG)WinQueryButtonCheckstate(hwndDlg,LOG_DEBUG);
+  
+  PutString(S_LogSticky, anUnsignedValue ? gYes : gNo); 
+  strcpy(gLogSticky, anUnsignedValue ? gYes : gNo);  
+} /* end if */
+
+if (c_ss)
+{
+anUnsignedValue=(ULONG)WinQueryButtonCheckstate(hwndDlg,STATUS_DEBUG);
+  
+  PutString(S_SendStatus, anUnsignedValue ? gYes : gNo); 
+  strcpy(gSendStatus, anUnsignedValue ? gYes : gNo);  
+} /* end if */
+/* Get item value (numeric style) FREQUENCY_CONFIG Spin Button */
+WinSendDlgItemMsg(hwndDlg, STATUS_SPIN,
+                  SPBM_QUERYVALUE,
+                  MPFROMP(&anUnsignedValue),   /* Buffer for value */
+                  MPFROM2SHORT(0,SPBQ_ALWAYSUPDATE));
+if (atol(gSendLines) != anUnsignedValue)
+{
+  sprintf(gSendLines, "%d", anUnsignedValue);
+  PutString(S_SendLines, gSendLines);
+} /* end if */

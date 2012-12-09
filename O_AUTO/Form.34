@@ -1,0 +1,6 @@
+/* Code Section Extra include files - Form STICKY2\O_CONFIG */
+
+#include "sticky2.h"
+#include "data.h"
+
+int c_e, c_v, c_t, c_n;

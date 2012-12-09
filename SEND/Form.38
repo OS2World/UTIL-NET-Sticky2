@@ -1,0 +1,28 @@
+/* Code Section User defined messages - Form STICKY2\Main */
+
+
+case WM_USER_STATUS:
+  {
+  APIRET	rc;
+  char locbuf[255];
+  
+  rc = SetTextError(LONGFROMMP(mp1), LONGFROMMP(mp2), locbuf);
+
+  /* Set item text ERROR_TEXT Text */
+  WinSetDlgItemText(hwndDlg, ERROR_TEXT, locbuf);
+  }
+  break; 
+
+
+case WM_MINMAXFRAME:
+  {
+  SWP *swp;
+    
+  /* hide list box when minimized so it doesn't overwrite icon */
+  swp = PVOIDFROMMP( mp1 );
+  WinShowWindow(WinWindowFromID( hwndDlg, ERROR_TEXT),
+          !(swp->fl & SWP_MINIMIZE));
+
+  }
+  break;
+  

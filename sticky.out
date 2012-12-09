@@ -1,0 +1,33 @@
+
+Information Presentation Facility Compiler Ver 2.1
+
+(C) Copyright IBM Corporation 1992.  All rights reserved.
+
+Compiling document with following Country Code, Code Page:
+1, 437
+
+...
+<sticky2.ipf:43> 203: Invalid symbol [&]
+..........
+<s_config.ipf:51> 203: Invalid symbol [&]
+......
+Resolving cross-references
+
+Cross-references resolved
+...................
+
+Statistics : 
+
+Total panels created        : 19
+Panels defined by name      : 19
+Panels defined by number    : 19
+Words in dictionary         : 488
+Global index entries        : 0
+Total index entries         : 20
+Total fonts used            : 2
+Files referenced externally : 0
+Panels defined externally   : 0
+Document's Country Code     : 1
+Document's Code Page        : 437
+
+Output file successfully created [sticky2.HLP]

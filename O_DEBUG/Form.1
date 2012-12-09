@@ -1,0 +1,28 @@
+/* Event Opened - Form STICKY2\O_DEBUG */
+
+c_dl = c_ls = c_ss = 0;
+
+WinCheckButton(hwndDlg, LOG_DEBUG, CheckYes(gDebugLog));
+WinCheckButton(hwndDlg, DEBUG_DEBUG, CheckYes(gLogSticky));
+WinCheckButton(hwndDlg, STATUS_DEBUG, CheckYes(gSendStatus));
+
+/* Set range (numeric style) STATUS_SPIN Spin Button */
+WinSendDlgItemMsg(hwndDlg, STATUS_SPIN,
+                  SPBM_SETLIMITS,
+                  MPFROMLONG(1000),                 /* Upper limit */
+                  MPFROMLONG(1));                   /* Lower limit */ 
+
+/* Set item value (numeric style) STATUS_SPIN Spin Button */
+WinSendDlgItemMsg(hwndDlg, STATUS_SPIN,
+                  SPBM_SETCURRENTVALUE,
+                  MPFROMLONG(atol(gSendLines)), /* Value within range */
+                  0);
+
+if (CheckNo(gSendStatus))
+{
+/* Disable window Lines1004 Text */
+WinEnableControl(hwndDlg, 1004, FALSE);
+/* Disable window STATUS_SPIN Spin Button */
+WinEnableControl(hwndDlg, STATUS_SPIN, FALSE);
+} /* end if */
+

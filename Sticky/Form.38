@@ -1,0 +1,91 @@
+/* Code Section User defined messages - Form STICKY2\Sticky */
+
+
+case WM_USER_STICKY_MSG:
+  {
+  /* Open the form D:\Projects\Sticky2\Sticky */
+  CHAR aTextValue[512];
+  CHAR SL[4096];
+  CHAR CRLF[3] = "\r\n";
+  LONG anIntegerValue=0;
+  LONG	curloc, alen;
+  APIRET 	rc;
+  PRECVMSG 	rm;
+  time_t	lt;
+  
+  struct hostent *hostent = 0;
+  struct ipaddr {
+    char	b1,b2,b3,b4;
+  } *ipa;
+ 
+  rm = (PRECVMSG)(PVOIDFROMMP(mp1));
+  
+  curloc = 0;
+  memset(aTextValue, 0, sizeof(aTextValue));
+  
+  memcpy(aTextValue, rm->msg, ASCLEN);
+  alen = atoi(aTextValue);
+  curloc += ASCLEN;
+  
+  memset(aTextValue, 0, sizeof(aTextValue));
+  memcpy(aTextValue, &rm->msg[curloc], alen);
+  /* Set item text NOTE_FROM Text */
+  WinSetDlgItemText(hwndDlg, NOTE_HOST, aTextValue);
+  
+  strcpy(SL, "<<<--- Received Sticky !\r\n");
+  strcat(SL, aTextValue);
+  strcat(SL, CRLF);
+  curloc += alen + ASCLEN;
+  
+  ipa = (struct ipaddr *)&rm->addr;
+  
+  if (CheckYes(gReverseLookup))
+    hostent = gethostbyaddr((char *)ipa, 4, PF_INET);
+    
+  if (hostent)
+  {
+    sprintf(aTextValue, "%s", hostent->h_name);
+  } else {
+    sprintf(aTextValue, "%d.%d.%d.%d", ipa->b1, ipa->b2, ipa->b3, ipa->b4);  
+  } /* end if */
+  
+  
+
+  /* Set item text NOTE_HOST Group Box */
+  WinSetDlgItemText(hwndDlg, NOTE_FROM, aTextValue);
+  
+  strcat(SL, aTextValue);
+  strcat(SL, CRLF);
+  
+    
+  time(&lt);
+  sprintf(aTextValue, "Note # %d @ %s", rm->stickynum, ctime(&lt));
+  WinSetWindowText(hwndFrame, aTextValue);
+  strcat(SL, aTextValue);
+  strcat(SL, CRLF);
+
+  /* Set item text NOTE_NOTE Multi-Line Entry Field */
+  WinSetDlgItemText(hwndDlg, NOTE_NOTE, &rm->msg[curloc]);
+  strcat(SL, &rm->msg[curloc]);
+  strcat(SL, CRLF);
+  StickyLog(SL);
+  
+  rc = FreeSubMem(gSubMemBase, rm->ptr, rm->len);
+  sprintf(aTextValue, "RC from DosSubFreeMem = %d", rc);
+  MsgLog(aTextValue);
+  
+  }
+break;
+
+case WM_MINMAXFRAME:
+  {
+  SWP *swp;
+    
+  /* hide list box when minimized so it doesn't overwrite icon */
+  swp = PVOIDFROMMP( mp1 );
+  WinShowWindow(WinWindowFromID( hwndDlg, NOTE_CLEAR),
+          !(swp->fl & SWP_MINIMIZE));
+
+  }
+  break;
+  

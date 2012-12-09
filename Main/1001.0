@@ -1,0 +1,16 @@
+/* Event Clicked/selected - Config CONFIG_MAIN */
+CHAR aTextValue[255]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+
+
+
+/* Open the modal form E:\Projects\Sticky2\CONFIG */
+{
+   USHORT usReturn;
+   HWND hNewFrame;
+   hNewFrame = OpenCONFIG(hwndDlg, 0);
+   gSendConfig = hNewFrame;
+   usReturn = (USHORT) WinProcessDlg(hNewFrame);
+}
+

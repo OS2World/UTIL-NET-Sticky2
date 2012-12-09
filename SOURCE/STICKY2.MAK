@@ -1,0 +1,145 @@
+# PROGRAM - Makefile (Sticky2.MAK) 
+#
+#       Makefile variables from Build Options 
+#
+CFLAGS=/c /O /Gm /Ss /W3 /Tl- -I. -I..\SUBPROCS -IE:\VISPROC
+LFLAGS=/ST:65536 /ALIGN:4 /NOI /NOE /EXEPACK
+L_ADDITIONAL_LIBS=cppom30.LIB so32dll.lib tcp32dll.lib os2386.lib 
+L_ADDITIONAL_OBJS=
+COMPILER=ICC
+LINKER=LINK386
+#
+#       Additional definitions 
+#
+SUBPROCS=..\\SUBPROCS\\
+EXCL=!
+OBJECTS= \
+          ABOUT.OBJ \
+          AUTORPLY.OBJ \
+          CONFIG.OBJ \
+          Main.OBJ \
+          O_AUTO.OBJ \
+          O_CONFIG.OBJ \
+          O_DEBUG.OBJ \
+          O_NAMES.OBJ \
+          O_THREADS.OBJ \
+          O_USER.OBJ \
+          POPUP.OBJ \
+          REPLY.OBJ \
+          Send.OBJ \
+          STICKY.OBJ \
+          COMMS.OBJ \
+          DATA.OBJ \
+          INI.OBJ \
+          LOG.OBJ \
+          MEM.OBJ \
+          PARSE.OBJ \
+          PMFUNCS.OBJ \
+          PMSOCK.OBJ \
+          THREADR.OBJ \
+          THREADS.OBJ 
+
+ALL: ..\Sticky2.exe 
+#
+#       Statements to compile the classes
+#
+ABOUT.OBJ:  ABOUT.C ABOUT.H ABOUT.RCH  Sticky2.RCH MAIN.H 
+    $(COMPILER) $(CFLAGS) ABOUT.C
+AUTORPLY.OBJ:  AUTORPLY.C AUTORPLY.H AUTORPLY.RCH  Sticky2.RCH MAIN.H 
+    $(COMPILER) $(CFLAGS) AUTORPLY.C
+CONFIG.OBJ:  CONFIG.C CONFIG.H CONFIG.RCH  Sticky2.RCH MAIN.H 
+    $(COMPILER) $(CFLAGS) CONFIG.C
+Main.OBJ:  Main.C Main.H Main.RCH  Sticky2.RCH MAIN.H 
+    $(COMPILER) $(CFLAGS) Main.C
+O_AUTO.OBJ:  O_AUTO.C O_AUTO.H O_AUTO.RCH  Sticky2.RCH MAIN.H 
+    $(COMPILER) $(CFLAGS) O_AUTO.C
+O_CONFIG.OBJ:  O_CONFIG.C O_CONFIG.H O_CONFIG.RCH  Sticky2.RCH MAIN.H 
+    $(COMPILER) $(CFLAGS) O_CONFIG.C
+O_DEBUG.OBJ:  O_DEBUG.C O_DEBUG.H O_DEBUG.RCH  Sticky2.RCH MAIN.H 
+    $(COMPILER) $(CFLAGS) O_DEBUG.C
+O_NAMES.OBJ:  O_NAMES.C O_NAMES.H O_NAMES.RCH  Sticky2.RCH MAIN.H 
+    $(COMPILER) $(CFLAGS) O_NAMES.C
+O_THREADS.OBJ:  O_THREADS.C O_THREADS.H O_THREADS.RCH  Sticky2.RCH MAIN.H 
+    $(COMPILER) $(CFLAGS) O_THREADS.C
+O_USER.OBJ:  O_USER.C O_USER.H O_USER.RCH  Sticky2.RCH MAIN.H 
+    $(COMPILER) $(CFLAGS) O_USER.C
+POPUP.OBJ:  POPUP.C POPUP.H POPUP.RCH  Sticky2.RCH MAIN.H 
+    $(COMPILER) $(CFLAGS) POPUP.C
+REPLY.OBJ:  REPLY.C REPLY.H REPLY.RCH  Sticky2.RCH MAIN.H 
+    $(COMPILER) $(CFLAGS) REPLY.C
+Send.OBJ:  Send.C Send.H Send.RCH  Sticky2.RCH MAIN.H 
+    $(COMPILER) $(CFLAGS) Send.C
+STICKY.OBJ:  STICKY.C STICKY.H STICKY.RCH  Sticky2.RCH MAIN.H 
+    $(COMPILER) $(CFLAGS) STICKY.C
+COMMS.OBJ:  $(SUBPROCS)COMMS.C  $(SUBPROCS)THREADS.H $(SUBPROCS)THREADR.H $(SUBPROCS)STICKY2.H
+    $(COMPILER) $(CFLAGS) $(SUBPROCS)COMMS.C
+DATA.OBJ:  $(SUBPROCS)DATA.C  $(SUBPROCS)THREADS.H $(SUBPROCS)THREADR.H $(SUBPROCS)STICKY2.H $(SUBPROCS)DATA.H
+    $(COMPILER) $(CFLAGS) $(SUBPROCS)DATA.C
+INI.OBJ:  $(SUBPROCS)INI.C  $(SUBPROCS)INI.H
+    $(COMPILER) $(CFLAGS) $(SUBPROCS)INI.C
+LOG.OBJ:  $(SUBPROCS)LOG.C  $(SUBPROCS)STICKY2.H
+    $(COMPILER) $(CFLAGS) $(SUBPROCS)LOG.C
+MEM.OBJ:  $(SUBPROCS)MEM.C 
+    $(COMPILER) $(CFLAGS) $(SUBPROCS)MEM.C
+PARSE.OBJ:  $(SUBPROCS)PARSE.C  $(SUBPROCS)PARSE.H
+    $(COMPILER) $(CFLAGS) $(SUBPROCS)PARSE.C
+PMFUNCS.OBJ:  $(SUBPROCS)PMFUNCS.C 
+    $(COMPILER) $(CFLAGS) $(SUBPROCS)PMFUNCS.C
+PMSOCK.OBJ:  $(SUBPROCS)PMSOCK.C  $(SUBPROCS)PMSOCK.H
+    $(COMPILER) $(CFLAGS) $(SUBPROCS)PMSOCK.C
+THREADR.OBJ:  $(SUBPROCS)THREADR.C  $(SUBPROCS)THREADS.H $(SUBPROCS)THREADR.H $(SUBPROCS)STICKY2.H
+    $(COMPILER) $(CFLAGS) $(SUBPROCS)THREADR.C
+THREADS.OBJ:  $(SUBPROCS)THREADS.C  $(SUBPROCS)THREADS.H $(SUBPROCS)THREADR.H $(SUBPROCS)STICKY2.H
+    $(COMPILER) $(CFLAGS) $(SUBPROCS)THREADS.C
+#
+#       Statements to compile resources for the classes
+#
+Sticky2.RES:  Sticky2.RC Sticky2.RCH\
+               ABOUT.RCH ABOUT.RC \
+               AUTORPLY.RCH AUTORPLY.RC \
+               CONFIG.RCH CONFIG.RC \
+               Main.RCH Main.RC \
+               O_AUTO.RCH O_AUTO.RC \
+               O_CONFIG.RCH O_CONFIG.RC \
+               O_DEBUG.RCH O_DEBUG.RC \
+               O_NAMES.RCH O_NAMES.RC \
+               O_THREADS.RCH O_THREADS.RC \
+               O_USER.RCH O_USER.RC \
+               POPUP.RCH POPUP.RC \
+               REPLY.RCH REPLY.RC \
+               Send.RCH Send.RC \
+               STICKY.RCH STICKY.RC 
+    RC -r Sticky2.RC
+#
+#       Statements to link the EXE file
+#
+..\Sticky2.exe:  $(OBJECTS) Sticky2.DEF Sticky2.RES Sticky2.MAK 
+    $(LINKER) @<<
+           $(LFLAGS) $(L_ADDITIONAL_OBJS)  +
+          ABOUT.OBJ  +
+          AUTORPLY.OBJ  +
+          CONFIG.OBJ  +
+          Main.OBJ  +
+          O_AUTO.OBJ  +
+          O_CONFIG.OBJ  +
+          O_DEBUG.OBJ  +
+          O_NAMES.OBJ  +
+          O_THREADS.OBJ  +
+          O_USER.OBJ  +
+          POPUP.OBJ  +
+          REPLY.OBJ  +
+          Send.OBJ  +
+          STICKY.OBJ +
+          COMMS.OBJ +
+          DATA.OBJ +
+          INI.OBJ +
+          LOG.OBJ +
+          MEM.OBJ +
+          PARSE.OBJ +
+          PMFUNCS.OBJ +
+          PMSOCK.OBJ +
+          THREADR.OBJ +
+          THREADS.OBJ ,
+          ..\Sticky2.exe,, $(L_ADDITIONAL_LIBS), Sticky2.DEF 
+<<
+    RC Sticky2.RES ..\Sticky2.exe

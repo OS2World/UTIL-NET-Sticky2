@@ -1,0 +1,17 @@
+/* Event Opened - Form STICKY2\ABOUT */
+CHAR aTextValue[255]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+static HPOINTER hptr=0;
+
+/* Set item text VERSION_ABOUT Text */
+WinSetDlgItemText(hwndDlg, VERSION_ABOUT, gVersion);
+if (!hptr)
+  hptr=WinLoadPointer(HWND_DESKTOP, 0L, ICON_STICKY);
+
+WinSendDlgItemMsg(hwndDlg, ABOUT_ICON,
+                  SM_SETHANDLE,
+                  MPFROMLONG(hptr),   /* Icon handle */
+                  0);
+WinInvalidateRect(WinWindowFromID(hwndDlg, ABOUT_ICON),0,TRUE);
+

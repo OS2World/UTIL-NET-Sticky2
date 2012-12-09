@@ -1,0 +1,34 @@
+/* Event Opened - Form STICKY2\O_CONFIG */
+CHAR aTextValue[255]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+
+c_e = c_v = c_t = c_n = 0;
+
+WinCheckButton(hwndDlg, ENABLE_AUTO, CheckYes(gAutoReply));
+WinCheckButton(hwndDlg, VERSION_AUTO, CheckYes(gAutoVer));
+WinCheckButton(hwndDlg, TIME_AUTO, CheckYes(gAutoTime));
+WinCheckButton(hwndDlg, NAME_AUTO, CheckYes(gAutoName));
+/* Set text limit TEXT_AUTO Multi-Line Entry Field */
+WinSendDlgItemMsg(hwndDlg, TEXT_AUTO,
+                  MLM_SETTEXTLIMIT,
+                  MPFROMLONG(255),  /* New text limit */
+                  0);
+
+
+/* Set item text TEXT_AUTO Multi-Line Entry Field */
+WinSetDlgItemText(hwndDlg, TEXT_AUTO, gAutoText);
+
+
+
+if (CheckNo(gAutoReply))
+{
+
+WinEnableControl(hwndDlg, 1004, FALSE);
+WinEnableControl(hwndDlg, VERSION_AUTO, FALSE);
+WinEnableControl(hwndDlg, TIME_AUTO, FALSE);
+WinEnableControl(hwndDlg, NAME_AUTO, FALSE);
+WinEnableControl(hwndDlg, TEXT_AUTO, FALSE);
+
+} /* end if */
+

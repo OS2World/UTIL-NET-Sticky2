@@ -1,0 +1,5 @@
+#define IDM_SEND        100
+#define IDM_CONFIG      101
+#define IDM_CLEAR       102
+#define IDM_EXIT        999
+

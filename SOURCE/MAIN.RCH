@@ -1,0 +1,11 @@
+/* symbols for resource items */
+#define ID_MAINFORM  256
+#define SEND_MAIN 1000
+#define CONFIG_MAIN 1001
+#define CLEAR_MAIN 1002
+#define EXIT_MAIN 1003
+#define ICON_MAIN 1005
+#define STATUS_MAIN 1006
+#define VERSION_MAIN 1007
+#define ABOUT_MAIN 1008
+#define STICKY_ICO 1009

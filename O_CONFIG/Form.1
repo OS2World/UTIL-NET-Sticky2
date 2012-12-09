@@ -1,0 +1,58 @@
+/* Event Opened - Form STICKY2\O_CONFIG */
+CHAR aTextValue[255]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+
+c_cas = c_car = c_pop = c_aus = c_beep = c_mini = c_clr = 0;
+
+WinCheckButton(hwndDlg, SEND_CONFIG, CheckYes(gAfterSend));
+WinCheckButton(hwndDlg, REPLY_CONFIG, CheckYes(gAfterReply));
+WinCheckButton(hwndDlg, BACKGROUND_CONFIG, CheckYes(gPUS));
+WinCheckButton(hwndDlg, SURE_CONFIG, CheckYes(gSure));
+WinCheckButton(hwndDlg, MINI_CONFIG, CheckYes(gStickyIcon));
+
+WinCheckButton(hwndDlg, BEEP_CONFIG, CheckYes(gBeep));
+
+if (CheckNo(gBeep))
+{
+
+WinEnableControl(hwndDlg, 1006, FALSE);
+WinEnableControl(hwndDlg, 1007, FALSE);
+WinEnableControl(hwndDlg, FREQUENCY_CONFIG, FALSE);
+WinEnableControl(hwndDlg, DURATION_CONFIG, FALSE);
+
+} /* end if */
+
+
+/* Set range (numeric style) FREQUENCY_CONFIG Spin Button */
+WinSendDlgItemMsg(hwndDlg, FREQUENCY_CONFIG,
+                  SPBM_SETLIMITS,
+                  MPFROMLONG(5000),                  /* Upper limit */
+                  MPFROMLONG(10));                   /* Lower limit */ 
+WinSendDlgItemMsg(hwndDlg, DURATION_CONFIG,
+                  SPBM_SETLIMITS,
+                  MPFROMLONG(1000),                  /* Upper limit */
+                  MPFROMLONG(10));                   /* Lower limit */ 
+
+WinSendDlgItemMsg(hwndDlg, FREQUENCY_CONFIG,
+                  SPBM_SETCURRENTVALUE,
+                  MPFROMLONG(atol(gFreq)), /* Value within range */
+                  0);
+
+WinSendDlgItemMsg(hwndDlg, DURATION_CONFIG,
+                  SPBM_SETCURRENTVALUE,
+                  MPFROMLONG(atol(gDur)), /* Value within range */
+                  0);
+
+
+/* Set range without update CLEAR_CONFIG Spin Button */
+WinSendDlgItemMsg(hwndDlg, CLEAR_CONFIG,
+                  SPBM_OVERRIDESETLIMITS,
+                  MPFROMLONG(120),         /* Upper limit */
+                  MPFROMLONG(0));          /* Lower limit */
+
+/* Set item value (numeric style) CLEAR_CONFIG Spin Button */
+WinSendDlgItemMsg(hwndDlg, CLEAR_CONFIG,
+                  SPBM_SETCURRENTVALUE,
+                  MPFROMLONG(atol(gClearAuto)), /* Value within range */
+                  0);

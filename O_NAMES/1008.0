@@ -1,0 +1,50 @@
+/* Event Clicked/selected - Delete DELETE_NAMES */
+CHAR aTextValue[255]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+
+PO_NAMES_NAMES_CONTAINER_REC pRecord;
+
+  pRecord=(PO_NAMES_NAMES_CONTAINER_REC)WinSendDlgItemMsg(hwndDlg, NAMES_CONTAINER,
+                    CM_QUERYRECORDEMPHASIS,
+                    MPFROMP(CMA_FIRST), /* pointer to reference record */
+                    MPFROMLONG(CRA_SELECTED));
+                    
+  anUnsignedValue = 0;                    
+  if (CheckYes(gSure))
+    {
+    anUnsignedValue=(ULONG)WinMessageBox(HWND_DESKTOP, 
+                                         hwndFrame, 
+                                         "Delete Selected Names?", 
+                                         "Delete Names", 
+                                         256, 
+                                         MB_YESNO | MB_INFORMATION | MB_MOVEABLE);
+    } /* end if */
+                        
+  if (anUnsignedValue == MBID_YES)
+    {
+    sNamesChange = 1;
+    while (pRecord)
+    {
+      PMINIRECORDCORE pRecs[2];
+      MsgLog("Deleting Record");
+      FreeSubMem(pRecord->Record.pszIcon, strlen(pRecord->Record.pszIcon)+1);
+      FreeSubMem(pRecord->pszHost, strlen(pRecord->pszHost)+1);
+      FreeSubMem(pRecord->pszPort, strlen(pRecord->pszPort)+1);
+      pRecs[0] = (PMINIRECORDCORE)pRecord;
+      
+      pRecord=(PO_NAMES_NAMES_CONTAINER_REC)WinSendDlgItemMsg(hwndDlg, NAMES_CONTAINER,
+                        CM_QUERYRECORDEMPHASIS,
+                        MPFROMP(pRecord), /* pointer to reference record */
+                        MPFROMLONG(CRA_SELECTED));
+
+      WinSendDlgItemMsg(hwndDlg, NAMES_CONTAINER,
+                        CM_REMOVERECORD,
+                        MPFROMP(&pRecs), /* array of reference records */
+                        MPFROM2SHORT(1,CMA_FREE | CMA_INVALIDATE)); /* delete 1 record */
+      
+      }                  
+    } /* end if */
+
+
+

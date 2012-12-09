@@ -1,0 +1,34 @@
+/* Event Clicked/selected - Send  1003 */
+CHAR aTextValue[255];
+CHAR SendText[4096];
+INT	rc;
+
+/* Get item text REPLY_TO Text */
+WinQueryDlgItemText(hwndDlg, REPLY_TO, sizeof(aTextValue), aTextValue);
+
+/* Get item text SEND_TEXT Multi-Line Entry Field */
+WinQueryDlgItemText(hwndDlg, REPLY_TEXT, sizeof(SendText), SendText);
+
+rc = SendTo(hwndFrame, gSocket, aTextValue, SendText);
+
+if (rc != 0)
+{
+  /* Set item text ERROR_TEXT Text */
+  WinSetDlgItemText(hwndDlg, REPLY_ERROR, "Error Sending to Thread");
+} /* end if */
+else
+  {
+  /* Set default button Cancel1004 Push Button */
+  WinSendDlgItemMsg(hwndDlg, 1004,
+                    BM_SETDEFAULT,
+                    MPFROMLONG(TRUE), 0);
+  if (CheckYes(gAfterReply))
+    {
+    WinPostMsg(hwndDlg, WM_CLOSE, 0, 0);
+    } /* end if */
+
+  }	
+   
+  
+
+  

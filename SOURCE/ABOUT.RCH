@@ -1,0 +1,4 @@
+/* symbols for resource items */
+#define ID_ABOUTFORM  268
+#define VERSION_ABOUT 1003
+#define ABOUT_ICON 1010

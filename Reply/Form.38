@@ -1,0 +1,70 @@
+/* Code Section User defined messages - Form STICKY2\Reply */
+{
+CHAR aTextValue[255]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+
+case WM_USER_IP:
+  {
+  CHAR aTextValue[255]="text";
+  CHAR locbuf[255];
+  
+  ReverseLookup((char *)&mp1, aTextValue);
+  /* Set item text REPLY_TO Text */
+  WinSetDlgItemText(hwndDlg, REPLY_TO, aTextValue);
+
+  }	
+  break;
+case WM_USER_REPLYMT:
+  {
+  PMSGTEXT	mt;
+  
+  mt = PVOIDFROMMP(mp1);
+  /* Set item text REPLY_TEXT Multi-Line Entry Field */
+  WinSetDlgItemText(hwndDlg, REPLY_TEXT, mt->msgtext);
+  
+  /* Add item to end REPLY_TEXT Multi-Line Entry Field */
+  anIntegerValue=(LONG)WinSendDlgItemMsg(hwndDlg, REPLY_TEXT,
+                    MLM_QUERYTEXTLENGTH,
+                    0, 0);
+                    
+  /* The helper function MLEInsertText (in MAIN.C) sets MLE text*/
+  anUnsignedValue = MLEInsertText(hwndDlg, REPLY_TEXT,
+                    anIntegerValue,      /* Insert at end        */
+                    "\r------- Reply ------\r");        /* Text value           */
+
+                    
+  
+  FreeSubMem(gSubMemBase, mt, mt->len);
+
+
+
+
+  }	
+  break;
+  
+case WM_USER_STATUS:
+  {
+  APIRET	rc;
+  CHAR		locbuf[255];
+  rc = SetTextError(LONGFROMMP(mp1), LONGFROMMP(mp2), locbuf);  
+  
+  /* Set item text REPLY_ERROR Text */
+  WinSetDlgItemText(hwndDlg, REPLY_ERROR, locbuf);
+  
+  }
+  break;
+  
+  case WM_MINMAXFRAME:
+  {
+  SWP *swp;
+    
+  /* hide list box when minimized so it doesn't overwrite icon */
+  swp = PVOIDFROMMP( mp1 );
+  WinShowWindow(WinWindowFromID( hwndDlg, SEND_REPLY),
+          !(swp->fl & SWP_MINIMIZE));
+
+  }
+  break;
+  
+}

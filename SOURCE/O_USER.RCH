@@ -1,0 +1,4 @@
+/* symbols for resource items */
+#define ID_O_USERFORM  261
+#define O_USER_NAME 1000
+#define O_USER_IP 1002

@@ -1,0 +1,3 @@
+/* Event Clicked/Selected - Log Sent & Received Sticky's to  LOG_DEBUG */
+
+c_ls = 1;

@@ -1,0 +1,24 @@
+Stack Allocation = 65536 bytes
+
+ STICKY2.EXE
+
+ Start         Length     Name                   Class
+ 0001:00000000 000016E97H CODE32                 CODE 32-bit
+ 0001:00016E98 000000030H _MSGSEG32              CODE 32-bit
+ 0002:00000000 000002030H DATA32                 DATA 32-bit
+ 0002:00002030 000000000H CTOR_DTOR1             DATA 32-bit
+ 0002:00002030 000000000H CTOR_DTOR2             DATA 32-bit
+ 0002:00002030 000000000H CTOR_DTOR3             DATA 32-bit
+ 0002:00002030 000000330H CONST32                CONST 32-bit
+ 0002:00002360 00000000CH EDC1                   EDC_CLASS 32-bit
+ 0002:0000236C 0000004D4H EDC2                   EDC_CLASS 32-bit
+ 0002:00002840 000000004H EDC3                   EDC_CLASS 32-bit
+ 0002:00002844 000000000H BSS32                  BSS 32-bit
+ 0002:00002844 0000034E8H c_common               BSS 32-bit
+ 0002:00005D30 000010000H STACK32                STACK 32-bit
+
+ Origin   Group
+ 0000:0   FLAT
+ 0002:0   DGROUP
+
+Program entry point at 0001:0000CAF8

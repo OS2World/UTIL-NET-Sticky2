@@ -1,0 +1,9 @@
+/* symbols for resource items */
+#define ID_STICKYFORM  259
+#define NOTE_FROM_TXT 1000
+#define NOTE_FROM 1001
+#define NOTE_HOST 1002
+#define NOTE_NOTE 1003
+#define NOTE_CLEAR 1004
+#define NOTE_REPLY 1005
+#define NOTE_REPLYWITH 1006

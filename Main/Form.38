@@ -1,0 +1,276 @@
+/* Code Section User defined messages - Form STICKY2\Main */
+
+/* Code Section User defined messages - Form THREAD\Main */
+{
+char	locbuf[128];
+
+extern MRESULT EXPENTRY STICKYDlgProc(HWND hwndDlg, ULONG msg, MPARAM mp1, MPARAM mp2);
+#include "sticky.rch"
+
+case WM_BUTTON1DBLCLK:
+  {
+  WinPostMsg(hwndDlg, WM_COMMAND, MPFROM2SHORT(SEND_MAIN, 0), 0);
+  }
+  break;
+  
+case WM_BUTTON2DOWN:
+  {
+  static HWND hwndPopUpMenu= 0;
+  
+  if (!hwndPopUpMenu)
+    hwndPopUpMenu = WinLoadMenu(HWND_OBJECT, 0, ID_POPUPFORM);
+  WinPopupMenu(hwndFrame, hwndFrame, hwndPopUpMenu,
+  	       SHORT1FROMMP(mp1), SHORT2FROMMP(mp1), 0,
+  	       PU_HCONSTRAIN | PU_VCONSTRAIN | PU_KEYBOARD | PU_MOUSEBUTTON1);
+//  MsgLog("Called WinPopupMenu");  
+  }	       
+  break;
+
+
+case WM_USER_RESTORE:
+  {
+  SWP swp1, swp2; 
+  
+  MsgLog("User RESTORE Message");
+
+  if (CheckYes(gStickyIcon))
+    {
+    MsgLog("Restore from MiniIcon");
+    WinQueryWindowPos(WinWindowFromID(hwndDlg, STICKY_ICO), &swp1);
+    WinQueryWindowPos(WinWindowFromID(hwndDlg, FID_TITLEBAR), &swp2);
+      
+    WinSetParent(WinWindowFromID(hwndDlg, FID_MINMAX), HWND_OBJECT, FALSE);
+    WinSetParent(WinWindowFromID(hwndDlg, FID_SYSMENU), HWND_OBJECT, FALSE);    
+    WinSendMsg(hwndDlg, WM_UPDATEFRAME, MPFROMLONG(FCF_MINMAX | FCF_SYSMENU), 0);
+    WinInvalidateRect(hwndFrame, NULL, TRUE);      
+      
+    WinShowWindow(WinWindowFromID( hwndDlg, SEND_MAIN), 0);
+    WinShowWindow(WinWindowFromID( hwndDlg, STICKY_ICO), 1);
+               
+    WinSetWindowText(WinWindowFromID(hwndFrame, FID_TITLEBAR), 0);      
+    WinSetWindowPos(hwndFrame, NULLHANDLE, 0,0, swp1.cx, swp1.cy+swp2.cy+5, SWP_SIZE);
+    } 
+  else 
+    {
+    WinShowWindow(WinWindowFromID( hwndDlg, SEND_MAIN), 1);
+    WinShowWindow(WinWindowFromID( hwndDlg, STICKY_ICO), 0);
+    
+    WinSetParent(WinWindowFromID(HWND_OBJECT, FID_MINMAX), hwndFrame, FALSE);
+    WinSetParent(WinWindowFromID(HWND_OBJECT, FID_SYSMENU), hwndFrame, FALSE);    
+    WinSendMsg(hwndDlg, WM_UPDATEFRAME, MPFROMLONG(FCF_MINMAX | FCF_SYSMENU), 0);
+    WinInvalidateRect(hwndFrame, NULL, TRUE);      
+    
+    WinQueryWindowPos(WinWindowFromID(hwndDlg, CLEAR_MAIN), &swp1);
+    WinQueryWindowPos(WinWindowFromID(hwndDlg, FID_TITLEBAR), &swp2);
+    WinSetWindowText(WinWindowFromID(hwndFrame, FID_TITLEBAR), "Sticky/2"); 
+    sprintf(locbuf, "swp1.cy=%d, swp2.cy=%d", swp1.cy, swp2.cy);
+    MsgLog(locbuf);   
+    WinSetWindowPos(hwndFrame, NULLHANDLE, 0,0, gSWP.cx, swp1.cy+swp2.cy + 10, SWP_SIZE);    
+    } /* end if */
+        
+  }
+  break;
+
+case WM_USER_STICKY_MSG:
+  {
+ 
+  /* Open the form E:\Projects\Sticky2\STICKY */
+  {
+     HWND hNewFrame;
+     hNewFrame = OpenSTICKY(HWND_DESKTOP, 0);
+
+     if (CheckNo(gPUS))
+     {
+        WinSetWindowPos(hNewFrame, HWND_BOTTOM, 0, 0, 0, 0, SWP_DEACTIVATE);  
+     } /* end if */
+
+     
+     WinPostMsg(hNewFrame,
+                WM_USER_STICKY_MSG,
+                mp1,
+                mp2);
+
+     if (CheckYes(gBeep))
+       DosBeep(atoi(gFreq), atoi(gDur));
+                
+              
+   }
+
+  }
+  break;
+  
+
+case WM_USER_AUTOREPLY:
+  {
+ 
+  /* Open the form E:\Projects\Sticky2\STICKY */
+  {
+     HWND hNewFrame;
+     hNewFrame = OpenAUTORPLY(HWND_DESKTOP, 0);
+
+     
+     WinPostMsg(hNewFrame,
+                WM_USER_STICKY_MSG,
+                mp1,
+                mp2);
+
+     if (CheckYes(gBeep))
+       DosBeep(atoi(gFreq), atoi(gDur));
+                
+              
+   }
+  }
+  break;
+  
+  
+  
+  
+case WM_USER_STATUS:
+  {
+  APIRET	rc;
+  CHAR		locbuf[255];
+  if (CheckYes(gSendStatus))
+  {
+   
+  rc = SetTextError(LONGFROMMP(mp1), LONGFROMMP(mp2), locbuf);
+
+  if (strlen(locbuf))
+    anIntegerValue=(LONG)WinSendDlgItemMsg(hwndDlg, STATUS_MAIN,
+                      LM_INSERTITEM,
+                      MPFROMSHORT(LIT_END),
+                      MPFROMP(locbuf));  /* Text for new item */
+  
+
+  anIntegerValue=(LONG)WinSendDlgItemMsg(hwndDlg, STATUS_MAIN,
+                    LM_QUERYITEMCOUNT, 0, 0);
+  
+  if (anIntegerValue > atol(gSendLines))
+  {
+  anIntegerValue=(LONG)WinSendDlgItemMsg(hwndDlg, STATUS_MAIN,
+                    LM_DELETEITEM, 0, 0);
+  
+  } /* end if */
+
+
+  WinSendDlgItemMsg(hwndDlg, STATUS_MAIN,
+                    LM_SETTOPINDEX,
+                    MPFROMLONG(anIntegerValue-5), /* Index of item */
+                    0);
+
+
+
+  } /* end if */
+ 
+  }
+  break; 
+
+}
+
+
+case WM_MINMAXFRAME:
+  {
+  SWP *swp;
+  SWP oswp;
+  CHAR locbuf[128];
+  
+  swp = PVOIDFROMMP( mp1 );
+  
+  /* hide list box when minimized so it doesn't overwrite icon */  
+  WinShowWindow(WinWindowFromID( hwndDlg, SEND_MAIN),
+          !(swp->fl & SWP_MINIMIZE));
+  WinShowWindow(WinWindowFromID( hwndDlg, STICKY_ICO),
+          !(swp->fl & SWP_MINIMIZE));
+
+
+  sprintf(locbuf, "WM_MINMAXFRAME: mp1(swp) fl=%x, y=%d, x=%d", swp->fl, swp->y, swp->x);
+  MsgLog(locbuf);
+
+  WinQueryWindowPos(hwndDlg, &oswp);
+
+  sprintf(locbuf, "oswp.fl=%x y=%d, x=%d", oswp.fl, oswp.y, oswp.x);
+  MsgLog(locbuf);
+  
+  if (swp->fl & SWP_MAXIMIZE)
+    {
+    swp->cx = gSWP.cx;
+    swp->cy = gSWP.cy;
+    swp->x = gSWP.x;
+    swp->y = gSWP.y;
+    swp->fl |= SWP_SHOW;
+    swp->fl &= ~SWP_HIDE;    
+    
+    WinShowWindow(WinWindowFromID( hwndDlg, SEND_MAIN), 1);
+    WinShowWindow(WinWindowFromID( hwndDlg, STICKY_ICO), 0);
+    
+    MsgLog("--->>> Maximize");
+    } 
+  else if (swp->fl & SWP_RESTORE)
+    {
+    SWP swp1, swp2; 
+        
+    if (CheckYes(gStickyIcon))
+      {
+      MsgLog("Restore from MiniIcon");
+      WinQueryWindowPos(WinWindowFromID(hwndDlg, STICKY_ICO), &swp1);
+      WinQueryWindowPos(WinWindowFromID(hwndDlg, FID_TITLEBAR), &swp2);
+      
+      WinSetParent(WinWindowFromID(hwndDlg, FID_MINMAX), HWND_OBJECT, TRUE);
+      WinSetParent(WinWindowFromID(hwndDlg, FID_SYSMENU), HWND_OBJECT, FALSE);    
+      WinSendMsg(hwndDlg, WM_UPDATEFRAME, MPFROMLONG(FCF_MINMAX | FCF_SYSMENU), 0);
+      WinInvalidateRect(hwndFrame, NULL, TRUE);      
+      
+      swp->cy = swp1.cy + swp2.cy + 5;
+      swp->cx = swp1.cx;
+      swp->x = gSWP.x;
+      swp->y = gSWP.y;
+      swp->fl |= SWP_SHOW;
+      
+      WinShowWindow(WinWindowFromID( hwndDlg, SEND_MAIN), 0);
+      WinShowWindow(WinWindowFromID( hwndDlg, STICKY_ICO), 1);
+               
+      WinSetWindowText(WinWindowFromID(hwndFrame, FID_TITLEBAR), 0);      
+      
+    } else {
+      WinQueryWindowPos(WinWindowFromID(hwndDlg, CONFIG_MAIN), &swp1);
+      WinQueryWindowPos(WinWindowFromID(hwndDlg, ABOUT_MAIN), &swp2);
+      swp->cy = swp1.cy + swp2.cy + 10;
+      swp->cx = gSWP.cx;
+      swp->x = gSWP.x;
+      swp->y = gSWP.y;
+      swp->fl |= SWP_SHOW;
+      WinSetWindowText(WinWindowFromID(hwndFrame, FID_TITLEBAR), "Sticky/2");
+      WinShowWindow(WinWindowFromID( hwndDlg, SEND_MAIN), 1);
+      WinShowWindow(WinWindowFromID( hwndDlg, STICKY_ICO), 0);
+      
+    } /* end if */
+        
+    MsgLog("--->>> Restore");
+    }
+  else if (swp->fl & SWP_MINIMIZE)
+    {
+    MsgLog("--->>> Minimize");
+    gSWP.y = oswp.y;
+    gSWP.x = oswp.x;
+    WinShowWindow(WinWindowFromID( hwndDlg, SEND_MAIN), 0);
+    WinShowWindow(WinWindowFromID( hwndDlg, STICKY_ICO), 0);
+    
+    }
+  }
+  break;
+  
+case WM_MOVE:
+  {
+  SWP oswp;
+  CHAR locbuf[128];
+  
+   
+  WinQueryWindowPos(hwndDlg, &oswp);
+  if (!(oswp.fl & SWP_MINIMIZE))
+    {
+    gSWP.y = oswp.y;
+    gSWP.x = oswp.x;
+    } /* end if */
+
+  }
+  break;
+  

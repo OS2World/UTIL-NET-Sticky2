@@ -1,0 +1,25 @@
+/* Event Mouse button 1 double click - Container NAMES_CONTAINER */
+CHAR aTextValue[512]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+/* pointer to a notify record enter structure */
+PNOTIFYRECORDENTER pNotifyRecordEnter= PVOIDFROMMP(mp2);
+
+PO_NAMES_NAMES_CONTAINER_REC pRecord;
+
+pRecord = (PO_NAMES_NAMES_CONTAINER_REC)pNotifyRecordEnter->pRecord;
+
+spRecord = pRecord;
+
+/* Set item text NAME_NAMES Entry Field */
+if (CheckYes(gLastNameFirst))
+{
+  CvtFirstLast(pRecord->Record.pszIcon, aTextValue);
+} else {
+  strcpy(aTextValue, pRecord->Record.pszIcon);
+} /* end if */
+
+WinSetDlgItemText(hwndDlg, NAME_NAMES, aTextValue);
+WinSetDlgItemText(hwndDlg, HOST_NAMES, pRecord->pszHost);
+WinSetDlgItemText(hwndDlg, PORT_NAMES, pRecord->pszPort);
+

@@ -1,0 +1,8 @@
+/* symbols for resource items */
+#define ID_POPUPFORM  266
+#define PUM_SEND 700
+#define PUM_CONFIG 701
+#define PUM_CLEAR 702
+#define PUM_EXIT 999
+#define PUM_ABOUT 703
+#define PUM_MAXIMIZE 256

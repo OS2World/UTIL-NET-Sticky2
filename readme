@@ -1,0 +1,62 @@
+Welcome to Sticky/2 for OS/2
+
+This program is a simple TCP/IP Client Server program.
+It allows you to send Sticky Notes across a TCP/IP network.
+
+This is version 1.02 so lots can be added, just let me know.
+Send any enhancement requests to awysocki@Bearsoft.com.
+
+INSTALLING:
+To install Sticky/2 just unzip the programs into a subdirectory
+and run the Sticky/2 program.  Sticky/2 will create its .INI, .LOG
+and .DBG file in the same directory where the program is found.
+So you do not have to drag the .EXE file to your desktop.  Create
+a program object if you want the Sticky/2 program on your desktop.
+
+Or just run the MAKEWPS.CMD FROM THE DIRECTORY where STICKY2.EXE will
+be kept.  MAKEWPS will create and Program object on your desktop, you
+can then move it wherever your heart desires.
+
+
+REGISTRATION:
+There is no fee if you are using it at home, but if you are
+the government or a business.  I do ask that you send $5.00
+per user.  I believe in letting big business pay for my compiler
+and computer time.
+
+AB Software
+3109 Village Rd West
+Norwood, MA 02062-2542
+awysocki@Bearsoft.com
+http://www.Bearsoft.com/sticky2
+
+
+To register Sticky/2 All I ask is that you send me a note,
+with the Subject line stating 'I'm using Sticky/2'
+Thats it.  I only want to count how many people try the program
+and are using it.  Since I'm only one person, I only provide E-Mail support.
+I can't provide auto-updates of the code, or other fancy stuff like that.
+I will promise to keep the Sticky/2 Home page up to date, and try to keep the
+OS/2 download sites updated.
+
+So to register:  Send a note to:
+
+To:     AWYSOCKI@Bearsoft.com
+Subj:   I'm using Sticky/2
+
+
+Thanks
+Andy
+
+-----------------------------------------------------------------------------
+June 22, 1995   Version 1.00 - Initial release
+
+
+July 15, 1995   Version 1.01
+        - Added double click on Sticky/2 windown (full size or Minimized)
+          will bring up the SEND window
+        - Added Reverse lookup of IP addresses to HOST names
+
+July 25, 1995   Version 1.02
+        - Fixed a bug where an incomplete autoreply would cause Sticky/2 to
+          trap out.

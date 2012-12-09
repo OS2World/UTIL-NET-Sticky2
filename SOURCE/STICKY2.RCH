@@ -1,0 +1,12 @@
+
+#define ICON_STICKY   1
+#define ICON_SUNSMILE 2
+#define ICON_XMAIL 3
+#define ICON_TOOLS 4
+#define ICON_ML1 5
+#define ICON_DEBUG 6
+#define ICON_AUTOREPLY 7
+#define ICON_BIGSTICKY 8
+#define ICON_SCROLL    9
+#define ICON_WS1 10
+

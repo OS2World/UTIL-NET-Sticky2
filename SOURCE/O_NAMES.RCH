@@ -1,0 +1,13 @@
+/* symbols for resource items */
+#define ID_O_NAMESFORM  264
+#define NAME_NAMES 1000
+#define HOST_NAMES 1001
+#define NAMES_CONTAINER 1005
+#define SORT_NAMES 1006
+#define LAST_NAMES 1007
+#define DELETE_NAMES 1008
+#define MODIFY_NAMES 1009
+#define ADD_NAMES 1004
+#define P6711_NAMES 1010
+#define PORT_NAMES 1012
+#define REVERSELOOKUP_NAMES 1013

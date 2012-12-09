@@ -1,0 +1,14 @@
+/* Event Clicked/selected - About ABOUT_MAIN */
+CHAR aTextValue[255]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+
+
+/* Open the modal form D:\Projects\Sticky2\ABOUT */
+{
+   USHORT usReturn;
+   HWND hNewFrame;
+   hNewFrame = OpenABOUT(hwndDlg, 0);
+   usReturn = (USHORT) WinProcessDlg(hNewFrame);
+}
+

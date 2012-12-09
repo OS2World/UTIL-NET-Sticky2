@@ -1,0 +1,11 @@
+/* Event Clicked/Selected - Beep BEEP_CONFIG */
+ULONG	anUnsignedValue;
+
+c_beep = 1;
+/* Is button selected? BEEP_CONFIG Check Box */
+anUnsignedValue=(ULONG)WinQueryButtonCheckstate(hwndDlg,BEEP_CONFIG);
+
+WinEnableControl(hwndDlg, 1006, anUnsignedValue);
+WinEnableControl(hwndDlg, 1007, anUnsignedValue);
+WinEnableControl(hwndDlg, FREQUENCY_CONFIG, anUnsignedValue);
+WinEnableControl(hwndDlg, DURATION_CONFIG, anUnsignedValue);

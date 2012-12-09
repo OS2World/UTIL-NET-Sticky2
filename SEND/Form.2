@@ -1,0 +1,34 @@
+/* Event Closed - Form STICKY2\Send */
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+APIRET	rc;
+
+
+
+  WinSendDlgItemMsg(hwndDlg, IP_CONTAINER,
+                         CM_REMOVERECORD,
+                         MPFROMP(0), /* all Records */
+                         MPFROM2SHORT(0,CMA_FREE | CMA_INVALIDATE)); /* delete all records */
+
+
+  {
+   CNRINFO cnrinfo;
+   SWP 	swp;
+   
+   WinQueryWindowPos(WinWindowFromID(hwndDlg, IP_CONTAINER), &swp);
+
+   cnrinfo.cb=sizeof(CNRINFO);
+   cnrinfo.flWindowAttr=CV_DETAIL | CA_DETAILSVIEWTITLES | CA_MIXEDTARGETEMPH;
+   WinSendDlgItemMsg(hwndDlg, IP_CONTAINER,
+                     CM_QUERYCNRINFO,
+                     MPFROMP(&cnrinfo),
+                     MPFROMLONG(CMA_FLWINDOWATTR | CMA_XVERTSPLITBAR));
+
+  sprintf(gSplitPercent, "%d", cnrinfo.xVertSplitbar);
+  PutString(S_SplitPercentSend, gSplitPercent);
+  }
+
+
+
+rc = FreeAllSubMem(g1Meg);
+g1Meg = 0;

@@ -1,0 +1,22 @@
+BITMAP 1 e:\projects\sticky2\STICKY3.ICO
+POINTER ICON_STICKY e:\projects\sticky2\STICKY3.ICO
+POINTER ICON_SUNSMILE e:\Projects\Sticky2\SUNSMILE.ICO
+POINTER ICON_XMAIL e:\Projects\Sticky2\XMAIL.ICO
+POINTER ICON_TOOLS e:\Projects\Sticky2\TOOLS.ICO
+POINTER ICON_ML1 e:\Projects\Sticky2\ML1.ICO
+POINTER ICON_DEBUG e:\Projects\Sticky2\DEBUG.ICO
+POINTER ICON_AUTOREPLY e:\Projects\Sticky2\sticky7.ICO
+POINTER ICON_BIGSTICKY e:\Projects\Sticky2\sticky.ico
+POINTER ICON_SCROLL e:\Projects\Sticky2\scroll.ico
+POINTER ICON_WS1 e:\Projects\Sticky2\ws1.ico
+#define ICON_STICKY   1
+#define ICON_SUNSMILE 2
+#define ICON_XMAIL 3
+#define ICON_TOOLS 4
+#define ICON_ML1 5
+#define ICON_DEBUG 6
+#define ICON_AUTOREPLY 7
+#define ICON_BIGSTICKY 8
+#define ICON_SCROLL    9
+#define ICON_WS1 10
+

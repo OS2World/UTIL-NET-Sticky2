@@ -1,0 +1,6 @@
+/* symbols for resource items */
+#define ID_SENDFORM  257
+#define SEND_TEXT 1002
+#define ERROR_TEXT 1003
+#define SEND_CANCEL 1004
+#define IP_CONTAINER 1005

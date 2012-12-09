@@ -1,0 +1,6 @@
+/* symbols for resource items */
+#define ID_REPLYFORM  260
+#define REPLY_TEXT 1000
+#define REPLY_TO 1001
+#define SEND_REPLY 1003
+#define REPLY_ERROR 1005

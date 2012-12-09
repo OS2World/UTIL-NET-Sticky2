@@ -1,0 +1,48 @@
+/* Event Clicked/selected - Send  1000 */
+CHAR aTextValue[3*1024]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+CHAR SendText[4096+32];
+INT	rc=0;
+PSEND_IP_CONTAINER_REC pRecord;
+time_t	lt;
+
+/* Get first selected item IP_CONTAINER Container */
+{
+  
+   pRecord=(PSEND_IP_CONTAINER_REC)WinSendDlgItemMsg(hwndDlg, IP_CONTAINER,
+                     CM_QUERYRECORDEMPHASIS,
+                     MPFROMP(CMA_FIRST), /* pointer to reference record */
+                     MPFROMLONG(CRA_SELECTED));
+}
+
+/* Get item text SEND_TEXT Multi-Line Entry Field */
+WinQueryDlgItemText(hwndDlg, SEND_TEXT, sizeof(SendText), SendText);
+
+while (pRecord)
+  {
+  rc = SendTo(hwndFrame, gSocket, pRecord->pszHost, SendText);
+  time(&lt);
+    
+  sprintf(aTextValue, ">>>--- Sent Sticky\r\n%s\r\n%s\r\n%s\r\n%s\r\n",
+  	  ctime(&lt), pRecord->Record.pszIcon, pRecord->pszHost, SendText);
+  StickyLog(aTextValue);
+  
+  
+   pRecord=(PSEND_IP_CONTAINER_REC)WinSendDlgItemMsg(hwndDlg, IP_CONTAINER,
+                     CM_QUERYRECORDEMPHASIS,
+                     MPFROMP(pRecord), /* pointer to reference record */
+                     MPFROMLONG(CRA_SELECTED));
+
+  }
+
+if (rc != 0)
+{
+/* Set item text ERROR_TEXT Text */
+WinSetDlgItemText(hwndDlg, ERROR_TEXT, "Error Sending to Thread");
+} /* end if */
+
+if (CheckYes(gAfterSend))
+  {
+  WinPostMsg(hwndDlg, WM_CLOSE, 0, 0);
+  } /* end if */

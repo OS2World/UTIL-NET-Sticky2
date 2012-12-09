@@ -1,0 +1,7 @@
+/* Event Clicked/selected - Clear NOTE_CLEAR */
+CHAR aTextValue[255]="text";
+LONG anIntegerValue=0;
+ULONG anUnsignedValue=0;
+
+
+WinPostMsg(hwndDlg, WM_CLOSE, 0, 0);
